@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --top-bg-color: #f7f6f3;
+  --bottom-bg-color: #E7E4DA;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+    box-sizing: border-box;
+  
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+@keyframes slide {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-slide {
+  animation: slide 1s linear;
+}
+.split-bg-vertical {
+  background: linear-gradient(to bottom, 
+    var(--top-bg-color) 0%, 
+    var(--top-bg-color) 50%, 
+    var(--bottom-bg-color) 50%, 
+    var(--bottom-bg-color) 100%
+  );
+}
+@font-face {
+  font-family: 'Brogadier';
+  src: url('/public/fonts/brogadier.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.input:focus{
+  border: none !important;
+  outline: none !important;
+}
+.custom-slider .slick-slide {
+  padding-right: 20px !important;  /* Adjust this value as needed */
+}
