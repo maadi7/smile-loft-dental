@@ -5,26 +5,31 @@ import Facebook from "../assets/facebook.svg";
 import Facebook1 from "../assets/facebook1.png";
 import LinkedIn from "../assets/linkedIn.svg";
 import Image from 'next/image';
+import Link from 'next/link';
 
-const FooterSection = ({ title, items }) => (
+const FooterSection = ({ title, items, pointer }) => (
   <div className='mt-20 lg:mt-0 flex flex-col items-start'>
     <p className='text-xl font-raleway font-semibold'>{title}</p>
     <div className='text-[18px] my-2 flex flex-col'>
       {items.map((item, index) => (
-        <p className="mt-4 font-nunito" key={index}>{item}</p>
+      <p className={`mt-4 font-nunito ${pointer ? 'cursor-pointer' : ''}`} key={index}>
+       {item}
+     </p>
       ))}
       {title === "Quick Links" &&
       <div className='mt-6' >
         <p className='text-xl font-semibold font-raleway' >Connect With Us</p>
         <div className='flex items-center mt-4 space-x-4'>
             <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className='inline-block'>
-              <Image src={Instagram} alt='Instagram' className='h-8 w-8 p-2 bg-white border border-white rounded-full' />
+              <Image src={Instagram} alt='Instagram' className='h-9 w-9 p-0 bg-white rounded-full' />
             </a>
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className='inline-block'>
-              <Image src={Facebook} alt='Facebook' className='h-8 w-8 p-2 bg-white border border-white rounded-full' />
+              <Image src={Facebook} alt='Facebook' className='h-9 w-9 p-2 bg-white border border-white rounded-full'
+              objectFit='contain' 
+              />
             </a>
             <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className='inline-block'>
-              <Image src={LinkedIn} alt='LinkedIn' className='h-8 w-8 p-2 bg-white border border-white rounded-full' />
+              <Image src={LinkedIn} alt='LinkedIn' className='h-9 w-9 p-1 bg-white border-white rounded-full object-contain' objectFit='contain' />
             </a>
           </div> 
       </div>
@@ -48,7 +53,7 @@ const Footer = () => {
       <div className='flex flex-1 flex-col lg:flex-row justify-around md:ml-10 xl:mr-20'>
         <FooterSection title="Our Locations" items={locations} />
         <FooterSection title="Meet All Doctors" items={doctors} />
-        <FooterSection title="Quick Links" items={links} />
+        <FooterSection title="Quick Links" items={links} pointer />
       </div>
 
     </div>

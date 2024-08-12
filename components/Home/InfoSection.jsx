@@ -1,10 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
-import dentist from "../assets/dentist.png";
-import BrandCircle from "../assets/brandcircle.png";
-import patient from "../assets/portrait-beautiful-patient.png";
+import dentist from "../../assets/dentist.png";
+import BrandCircle from "../../assets/brandcircle.png";
+import patient from "../../assets/portrait-beautiful-patient.png";
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
+import { fadeIn } from '../../utils/motion';
 
 const InfoSection = () => {
   return (
@@ -16,6 +16,7 @@ const InfoSection = () => {
           initial="hidden"
          whileInView="show"
          viewport={{ once: true}}
+         
         
         >
             <h1 className='font-playfair text-6xl leading-[67px] text-primary' >We treat your teeth, <br/>

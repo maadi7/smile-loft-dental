@@ -4,6 +4,8 @@ import { Playfair_Display, Nunito, Raleway } from '@next/font/google';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import "../styles/global.css"
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 
 const playfairDisplay = Playfair_Display({
@@ -18,7 +20,7 @@ const nunito = Nunito({
 const raleway = Raleway({
   weight: ['400', '600', '700'],
   subsets: ['latin']
-})
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -31,7 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             --font-satoshi: 'Satoshi', sans-serif;
         }
       `}</style>
+      <Navbar/>
       <Component {...pageProps} />
+      <Footer/>
       <style jsx global>{`
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap');
       `}</style>

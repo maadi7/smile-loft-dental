@@ -1,10 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
-import BlackWallpaper from "../assets/black-wallpaper.png";
-import TestimonialDentist from "../assets/TestimonialDentist.png";
-import qoutes from "../assets/“.png";
+import BlackWallpaper from "../../assets/black-wallpaper.png";
+import TestimonialDentist from "../../assets/TestimonialDentist.png";
+import qoutes from "../../assets/“.png";
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
+import { fadeIn } from '../../utils/motion';
 
 const Testimonials = () => {
   return (

@@ -3,13 +3,16 @@ export const fadeIn = (
   type: string,
   delay: number,
   duration: number,
-  rotate: number = 0 // Set default rotation to 0 if not specified
+  rotate: number = 0,
+
 ): { [key: string]: any } => ({
+
   hidden: {
       x: direction === "left" ? 200 : direction === "right" ? -200 : 0,
       y: direction === "up" ? 200 : direction === "down" ? -200 : 0,
       opacity: 0,
       rotate: rotate, // Apply rotation in hidden state
+      
       transition: {
           type,
           delay,
@@ -21,6 +24,7 @@ export const fadeIn = (
       x: 0,
       y: 0,
       opacity: 1,
+      
       rotate: 0, // Reset rotation in the show state
       transition: {
           type,

@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import Slider from 'react-slick';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { fadeIn } from '../utils/motion';
-import sampleImage1 from '../assets/slider1.png';
-import sampleImage2 from '../assets/slider2.png';
-import rightArrowIcon from "../assets/arrow-right.png";
-import leftArrowIcon from "../assets/arrow-left.png";
+import { fadeIn } from '../../utils/motion';
+import sampleImage1 from '../../assets/slider1.png';
+import sampleImage2 from '../../assets/slider2.png';
+import rightArrowIcon from "../../assets/arrow-right.png";
+import leftArrowIcon from "../../assets/arrow-left.png";
 
 const ImageSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -100,8 +100,8 @@ const ImageSlider = () => {
       
       >
         <h3 className='text-[28px] text-toptext font-semibold font-playfair'>Where</h3>
-        <h1 className='text-[56px] font-playfair font-semibold mb-5 text-primary'>OUR CLINIC</h1>
-        <p className='text-2xl font-nunito max-w-[600px] text-primary mb-4'>Lorem ipsum dolor sit amet consectetur. Ultrices eu felis ante pulvinar et.</p>
+        <h1 className='text-[56px] font-playfair font-semibold mb-5 text-primary'>To Find Us</h1>
+        <p className='text-2xl font-nunito max-w-[600px] text-primary mb-4'>Our clinics are conveniently located across Maryland to serve you better. Select your desired location </p>
       </motion.div>
     
       <Slider ref={sliderRef} {...settings} className="min-w-screen">
