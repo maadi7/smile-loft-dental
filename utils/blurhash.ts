@@ -1,6 +1,4 @@
-import { decode } from "blurhash";
-
-
+import { decode, encode } from "blurhash";
 
 export function blurHashToDataURL(
   hash: string | undefined

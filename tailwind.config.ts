@@ -7,6 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+   
     extend: {
       colors:{
          primary: "#313131",
@@ -28,6 +29,12 @@ const config: Config = {
         satoshi: ['var(--font-satoshi)', 'sans-serif'],
         raleway: ['var(--font-raleway)', 'sans-serif'],
         brogadier: ['Brogadier', 'sans-serif'],
+      },
+      screens: {
+        'xsm': '485px',
+        'custom-lg': '1150px',
+        'custom-md': '850px',
+        
       },
     },
   },

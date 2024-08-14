@@ -60,7 +60,7 @@ const ImageSlider = () => {
     },
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -68,7 +68,7 @@ const ImageSlider = () => {
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 1150,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -76,7 +76,7 @@ const ImageSlider = () => {
         }
       },
       {
-        breakpoint: 480,
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
@@ -91,23 +91,23 @@ const ImageSlider = () => {
 
   return (
     
-    <div className="py-0 pl-24 pr-0 relative  split-bg-vertical pb-24">
-      <motion.div className="col-span-2 row-span-2 flex flex-col items-start"
+    <div className="py-0 pl-4 pr-2 md:pr-0 md:pl-12 lg:pl-24  relative split-bg-vertical pb-12 md:pb-24">
+      <motion.div className="flex flex-col items-start  mb-5"
         variants={fadeIn("", "tween", 0.2, 1)} 
         initial="hidden"
        whileInView="show"
        viewport={{ once: true}}
       
       >
-        <h3 className='text-[28px] text-toptext font-semibold font-playfair'>Where</h3>
-        <h1 className='text-[56px] font-playfair font-semibold mb-5 text-primary'>To Find Us</h1>
-        <p className='text-2xl font-nunito max-w-[600px] text-primary mb-4'>Our clinics are conveniently located across Maryland to serve you better. Select your desired location </p>
+         <h3 className='text-[24px] sm:text-[28px]  text-toptext font-semibold font-playfair'>Where</h3>
+        <h1 className='text-[40px] sm:text-[56px] lg:text-[56px] font-playfair font-semibold text-primary md:mb-0 mb-2'>To Find Us</h1>
+        <p className='text-lg md:text-2xl font-nunito max-w-[600px] text-primary mb-4'>Our clinics are conveniently located across Maryland to serve you better. Select your desired location </p>
       </motion.div>
     
       <Slider ref={sliderRef} {...settings} className="min-w-screen">
         {images.map((image) => (
           <motion.div key={image.id} 
-          className={`p-4 ${currentSlide === 0 ? "ml-40" : "ml-0"}`}
+          className={`p-4 ${currentSlide === 0 ? "md:ml-40 " : "ml-0"}`}
           variants={fadeIn("left", "tween", 0.2, 1)} 
           initial="hidden"
          whileInView="show"
@@ -122,26 +122,27 @@ const ImageSlider = () => {
         ))}
       </Slider>
       
-      <div className='flex items-center p-10 mt-16 justify-between'>
-        <div className="left-20 w-[60%] h-2 bg-bgtop">
-          <div
-            className="h-full bg-primary transition-all duration-500"
-            style={{ width: `${loaderWidth}%` }}
-          ></div>
-        </div>
-        <div className='flex mr-24'>
-        <Image
-  src={leftArrowIcon}
-  className='h-14 w-14 bg-bgtop p-2 mr-2 rounded-full cursor-pointer'
-  onClick={goToPrevSlide}
-/>
-<Image
-  src={rightArrowIcon}
-  className='h-14 w-14 bg-bgtop p-2 ml-2 rounded-full cursor-pointer'
-  onClick={goToNextSlide}
-/>
-        </div>
-      </div>
+      <div className='flex flex-col-reverse md:flex-row items-center p-4 md:p-10 mt-8 md:mt-16 justify-between'>
+  <div className="w-full md:w-[60%] md:left-20 h-2 bg-bgtop">
+    <div
+      className="h-full bg-primary transition-all duration-500"
+      style={{ width: `${loaderWidth}%` }}
+    ></div>
+  </div>
+  <div className='flex justify-end w-full md:w-auto md:mr-8 lg:mr-24  mb-4 md:mb-0'>
+    <Image
+      src={leftArrowIcon}
+      className='h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 bg-bgtop p-2 mr-2 rounded-full cursor-pointer'
+      onClick={goToPrevSlide}
+    />
+    <Image
+      src={rightArrowIcon}
+      className='h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 bg-bgtop p-2 ml-2 rounded-full cursor-pointer'
+      onClick={goToNextSlide}
+    />
+  </div>
+</div>
+
     </div>
   );
 };
