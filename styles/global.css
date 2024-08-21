@@ -62,3 +62,23 @@ body {
 .custom-slider .slick-slide {
   padding-right: 20px !important;  /* Adjust this value as needed */
 }
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-150%);
+  }
+}
+
+.bounce-delay-0 {
+  animation: bounce 1s infinite;
+}
+
+.bounce-delay-1 {
+  animation: bounce 1s infinite 0.2s;
+}
+
+.bounce-delay-2 {
+  animation: bounce 1s infinite 0.4s;
+}

@@ -16,7 +16,9 @@ const config: Config = {
          toptext: "#747474",
          box1: "#E7E4DA",
          box2: "#CFC9B5",
-         subtext: "#2C312B"
+         subtext: "#2C312B",
+      
+         
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

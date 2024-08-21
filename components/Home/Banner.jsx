@@ -1,7 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BannerVideo from "../../assets/bannerVideo.mp4";
+import useTranslation from '../../hooks/useTranslation';
 
 const Banner = () => {
+  const { translate, language } = useTranslation();
+  const [translatedText, setTranslatedText] = useState({
+    title: "Welcome to",
+    button: "BOOK AN APPOINTMENT",
+  });
+
+  useEffect(() => {
+    if(language === "en"){
+      setTranslatedText({
+        title: "Welcome to",
+        button: "BOOK AN APPOINTMENT",
+      })
+      return;
+    }
+    const translateText = async () => {
+      const translatedTitle = await translate(translatedText.title);
+    
+      const translatedButton = await translate(translatedText.button);
+
+      setTranslatedText({
+        title: translatedTitle.text || translatedText.title,
+      
+        button: translatedButton.text || translatedText.button,
+      });
+    };
+
+    translateText();
+  }, [translate, language]);
+
+  
+
   return (
     <div className="relative h-[130vh] w-full overflow-hidden">
       <video
@@ -14,10 +46,11 @@ const Banner = () => {
       <div className="relative z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
         <div className="text-center">
           <h1 className="text-white text-5xl md:text-[110px] mb-4 leading-[70px] md:leading-[130px] font-playfair">
-            Welcome to <br /> Smile Loft
+            <span>{translatedText.title}{language === "es"? " a" : ""}</span><br />
+            <span>{"Smile Loft"}</span>
           </h1>
           <button className="mt-4 px-8 py-3 text-lg md:text-xl font-nunito text-white bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-full shadow-xl">
-            BOOK AN APPOINTMENT
+            {translatedText.button}
           </button>
         </div>
       </div>

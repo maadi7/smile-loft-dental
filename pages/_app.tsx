@@ -38,6 +38,7 @@ function AppContent({ Component, pageProps, router }: AppProps) {
           --font-satoshi: 'Satoshi', sans-serif;
         }
       `}</style>
+      
       {isLoading && <Loader />}
       <Navbar />
       <Component {...pageProps} />

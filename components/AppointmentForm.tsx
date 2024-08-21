@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppointmentInput } from '../types/graphql';
+import useTranslation from '../hooks/useTranslation';
 
 const AppointmentForm = () => {
+  const { translate, language } = useTranslation();
   const [formData, setFormData] = useState<AppointmentInput>({
     fullName: '',
     phoneNumber: '',
@@ -18,6 +20,47 @@ const AppointmentForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [translations, setTranslations] = useState<{
+    fullNamePlaceholder: string;
+    phoneNumberPlaceholder: string;
+    emailPlaceholder: string;
+    patientTypePlaceholder: string;
+    treatmentPlaceholder: string;
+    insurance: string;
+    location: string;
+    messagePlaceholder: string;
+    termsAccepted: string;
+    newsletterSubscribed: string;
+    submitButton: string;
+    successMessage: string;
+    failureMessage: string;
+    unknownError: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchTranslations = async () => {
+      const translatedTexts = {
+        fullNamePlaceholder: (await translate("Full Name"))?.text || "Full Name",
+        phoneNumberPlaceholder: (await translate("Phone Number"))?.text || "Phone Number",
+        emailPlaceholder: (await translate("Email Id"))?.text || "Email Id",
+        patientTypePlaceholder: (await translate("Patient Type"))?.text || "Patient Type",
+        treatmentPlaceholder: (await translate("Treatment"))?.text || "Treatment",
+        insurance: (await translate("Insurance"))?.text || "Insurance",
+        location: (await translate("Location"))?.text || "Location",
+        messagePlaceholder: (await translate("Your message"))?.text || "Your message",
+        termsAccepted: (await translate("I acknowledge and accept the Terms of Use"))?.text || "I acknowledge and accept the Terms of Use",
+        newsletterSubscribed: (await translate("I want to subscribe for a newsletter"))?.text || "I want to subscribe for a newsletter",
+        submitButton: (await translate("REQUEST CALLBACK"))?.text || "REQUEST CALLBACK",
+        successMessage: (await translate("Appointment request sent successfully!"))?.text || "Appointment request sent successfully!",
+        failureMessage: (await translate("Failed to send email"))?.text || "Failed to send email",
+        unknownError: (await translate("An unknown error occurred"))?.text || "An unknown error occurred",
+      };
+      setTranslations(translatedTexts);
+    };
+
+    fetchTranslations();
+  }, [translate]);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -27,18 +70,18 @@ const AppointmentForm = () => {
     }));
   };
 
-  const validateForm = () => {
-    if (!formData.fullName || !formData.email || !formData.phoneNumber ) {
-      return 'Please fill in all required fields.';
+  const validateForm = async () => {
+    if (!formData.fullName || !formData.email || !formData.phoneNumber) {
+      return translations?.fullNamePlaceholder;
     }
     if (!formData.termsAccepted) {
-      return 'You must accept the Terms of Use.';
+      return translations?.termsAccepted;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      return 'Please enter a valid email address.';
+      return translations?.emailPlaceholder;
     }
     if (!/^\+?[1-9]\d{1,14}$/.test(formData.phoneNumber)) {
-      return 'Please enter a valid phone number.';
+      return translations?.phoneNumberPlaceholder;
     }
     return null;
   };
@@ -48,7 +91,7 @@ const AppointmentForm = () => {
     setLoading(true);
     setError(null);
 
-    const validationError = validateForm();
+    const validationError = await validateForm();
     if (validationError) {
       setError(validationError);
       setLoading(false);
@@ -66,7 +109,7 @@ const AppointmentForm = () => {
 
       const result = await response.json();
       if (response.ok) {
-        alert('Appointment request sent successfully!');
+        alert(translations?.successMessage);
         setFormData({
           fullName: '',
           phoneNumber: '',
@@ -80,20 +123,24 @@ const AppointmentForm = () => {
           newsletterSubscribed: false,
         });
       } else {
-        throw new Error(result.error || 'Failed to send email');
+        throw new Error(result.error || translations?.failureMessage);
       }
     } catch (error) {
-      const errorMessage = (error as Error).message || 'An unknown error occurred';
+      const errorMessage = (error as Error).message || translations?.unknownError || "An unknown error occurred";
       setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
+  if (!translations) return <div>Loading translations...</div>;
+
   return (
     <div className='py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-8 md:px-16 lg:px-24 bg-bgtop'>
       <form onSubmit={handleSubmit} className="w-full max-w-full bg-bgbottom p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg font-nunito">
-        <h2 className='text-center text-2xl sm:text-3xl md:text-4xl uppercase font-playfair mb-6 sm:mb-8 lg:mb-10'>Book an Appointment</h2>
+        <h2 className='text-center text-2xl sm:text-3xl md:text-4xl uppercase font-playfair mb-6 sm:mb-8 lg:mb-10'>
+          {translations.submitButton}
+        </h2>
         
         <div className="flex flex-wrap mb-4 sm:mb-6 -mx-2 sm:-mx-3">
           <div className="w-full sm:w-1/2 px-2 sm:px-3 mb-4 sm:mb-0">
@@ -103,7 +150,7 @@ const AppointmentForm = () => {
               name="fullName"
               value={formData.fullName}
               onChange={handleInputChange}
-              placeholder="Full Name"
+              placeholder={translations.fullNamePlaceholder}
             />
           </div>
           <div className="w-full sm:w-1/2 px-2 sm:px-3">
@@ -113,7 +160,7 @@ const AppointmentForm = () => {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleInputChange}
-              placeholder="Phone Number"
+              placeholder={translations.phoneNumberPlaceholder}
             />
           </div>
         </div>
@@ -126,7 +173,7 @@ const AppointmentForm = () => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="Email Id"
+              placeholder={translations.emailPlaceholder}
             />
           </div>
           <div className="w-full sm:w-1/3 px-2 sm:px-3 mb-4 sm:mb-0">
@@ -136,7 +183,7 @@ const AppointmentForm = () => {
               name="patientType"
               value={formData.patientType}
               onChange={handleInputChange}
-              placeholder="Patient Type"
+              placeholder={translations.patientTypePlaceholder}
             />
           </div>
           <div className="w-full sm:w-1/3 px-2 sm:px-3">
@@ -146,7 +193,7 @@ const AppointmentForm = () => {
               name="treatment"
               value={formData.treatment}
               onChange={handleInputChange}
-              placeholder="Treatment"
+              placeholder={translations.treatmentPlaceholder}
             />
           </div>
         </div>
@@ -159,7 +206,7 @@ const AppointmentForm = () => {
               value={formData.insurance}
               onChange={handleInputChange}
             >
-              <option value="">Insurance</option>
+              <option value="">{translations.insurance}</option>
               <option value="Option 1">Option 1</option>
               <option value="Option 2">Option 2</option>
               <option value="Option 3">Option 3</option>
@@ -172,7 +219,7 @@ const AppointmentForm = () => {
               value={formData.location}
               onChange={handleInputChange}
             >
-              <option value="">Location</option>
+              <option value="">{translations.location}</option>
               <option value="Option 1">Option 1</option>
               <option value="Option 2">Option 2</option>
               <option value="Option 3">Option 3</option>
@@ -184,56 +231,54 @@ const AppointmentForm = () => {
           <div className="w-full px-2 sm:px-3">
             <textarea
               className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
-              rows={4}
               name="message"
               value={formData.message}
               onChange={handleInputChange}
-              placeholder="Your message"
-            ></textarea>
+              placeholder={translations.messagePlaceholder}
+              rows={4}
+            />
           </div>
         </div>
 
-        <div className="flex flex-wrap mb-4 sm:mb-6 -mx-2 sm:-mx-3">
-          <div className="w-full px-2 sm:px-3 mb-2 sm:mb-4">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="termsAccepted"
-                checked={formData.termsAccepted}
-                onChange={handleInputChange}
-                className="form-checkbox h-4 w-4 sm:h-5 sm:w-5 rounded-lg text-primary focus:ring-2 focus:ring-primary"
-              />
-              <span className="ml-2 text-sm sm:text-base text-gray-700">I acknowledge and accept the Terms of Use</span>
-            </label>
-          </div>
-          <div className="w-full px-2 sm:px-3">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="newsletterSubscribed"
-                checked={formData.newsletterSubscribed}
-                onChange={handleInputChange}
-                className="form-checkbox h-4 w-4 sm:h-5 sm:w-5 rounded-lg text-primary focus:ring-2 focus:ring-primary"
-              />
-              <span className="ml-2 text-sm sm:text-base text-gray-700">I want to subscribe for a newsletter</span>
-            </label>
-          </div>
+        <div className="flex items-center mb-4 sm:mb-6">
+          <input
+            type="checkbox"
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onChange={handleInputChange}
+            className="mr-2"
+          />
+          <label htmlFor="termsAccepted">{translations.termsAccepted}</label>
         </div>
 
+        <div className="flex items-center mb-4 sm:mb-6">
+          <input
+            type="checkbox"
+            name="newsletterSubscribed"
+            checked={formData.newsletterSubscribed}
+            onChange={handleInputChange}
+            className="mr-2"
+          />
+          <label htmlFor="newsletterSubscribed">{translations.newsletterSubscribed}</label>
+        </div>
         <div className="flex justify-center">
-          <button 
-            type="submit"
-            disabled={loading}
-            className='px-6 sm:px-8 py-2 sm:py-3 text-lg sm:text-xl font-nunito text-[#F7F6F3] bg-primary rounded-lg shadow-xl w-full sm:w-auto disabled:opacity-50'
-          >
-            {loading ? 'SUBMITTING...' : 'REQUEST CALLBACK'}
-          </button>
+        <button
+         type="submit"
+         disabled={loading}
+         className='px-6 sm:px-8 py-2 sm:py-3 text-lg sm:text-xl font-nunito text-[#F7F6F3] bg-primary rounded-lg shadow-xl w-full sm:w-auto disabled:opacity-50'
+        
+        >
+          {loading ? 'Loading...' : translations.submitButton}
+        </button>
         </div>
+        
+          
+      
 
-        {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+        {error && <p className="mt-4 text-red-500">{error}</p>}
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default AppointmentForm;
