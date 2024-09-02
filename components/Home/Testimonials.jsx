@@ -21,6 +21,15 @@ const Testimonials = () => {
 
   useEffect(() => {
     const translateText = async () => {
+      if(language === "en"){
+        setTranslatedText({
+          reviewText: "I have been coming to this office for many years, and always find them welcoming and efficient. Their high-tech equipment is amazing, and allows more precise work for crowns, etc. I recommend them.",
+          reviewerName: "Nancy Foster",
+          reviewsTitle: "WHAT PATIENTS SAY",
+          reviewsSubtitle: "Our Reviews"
+        });
+        return;
+      }
       const translatedReviewText = await translate(translatedText.reviewText);
       const translatedReviewerName = await translate(translatedText.reviewerName);
       const translatedReviewsTitle = await translate(translatedText.reviewsTitle);
@@ -60,7 +69,7 @@ const Testimonials = () => {
         <Image 
           src={TestimonialDentist} 
           alt='reviews' 
-          className='w-full h-auto md:w-[563px] md:h-[740px] bg-contain' 
+          className='w-full h-auto md:w-[563px] md:h-[740px] bg-contain rounded-lg' 
           placeholder='blur'
           blurDataURL={blurHashToDataURL("LDIrNm4T~AROVC0KMx$$krH=RjyD")}
         />
@@ -99,6 +108,7 @@ const Testimonials = () => {
           {translatedText.reviewerName}
         </motion.p>
       </motion.div>
+      
     </motion.div>
   );
 }

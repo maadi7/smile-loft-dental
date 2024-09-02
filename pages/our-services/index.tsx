@@ -3,6 +3,7 @@ import { graphQLClient } from "@/lib/graphqlClient";
 import { gql } from 'graphql-request';
 import Link from 'next/link';
 import useTranslation from '@/hooks/useTranslation';
+import Head from 'next/head';
 
 // Define TypeScript interfaces for the data structure
 interface Service {
@@ -64,8 +65,39 @@ const Ourservices: React.FC = () => {
   }, [services, translate, language]);
 
   const colors = ["#E7E4DA", "#CFC9B5"];
+  const baseUrl = 'https://smileloftdental.com'; // Replace with your actual base URL
+  const pageUrl = `${baseUrl}/our-services`;
 
   return (
+    <>
+       <Head>
+        <title>Our Dental Services | Smile Loft Dental</title>
+        <meta
+          name="description"
+          content="Explore our comprehensive range of dental services at Smile Loft Dental. From general dentistry to specialized treatments, we're committed to your oral health."
+        />
+        <link rel="canonical" href={pageUrl} />
+        
+        {/* OG Tags */}
+        <meta property="og:title" content="Our Dental Services | Smile Loft Dental" />
+        <meta 
+          property="og:description" 
+          content="Explore our comprehensive range of dental services at Smile Loft Dental. From general dentistry to specialized treatments, we're committed to your oral health."
+        />
+        <meta property="og:image" content="/assets/dentist.png" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Our Dental Services | Smile Loft Dental" />
+        <meta 
+          name="twitter:description" 
+          content="Explore our comprehensive range of dental services at Smile Loft Dental. From general dentistry to specialized treatments, we're committed to your oral health."
+        />
+        <meta name="twitter:image" content="/assets/dentist.png" />
+      </Head>
+
     <div className='bg-bgtop pt-20 pb-10 flex justify-center items-center'>
       {loading ? (
         <div className="min-h-[80vh] flex items-center justify-center space-x-4 z-50">
@@ -96,6 +128,7 @@ const Ourservices: React.FC = () => {
         </div>
       )}
     </div>
+    </>
   );
 }
 

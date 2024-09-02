@@ -12,10 +12,13 @@ import sampleImage1 from '../../assets/slider1.png';
 import sampleImage2 from '../../assets/slider2.png';
 import rightArrowIcon from "../../assets/arrow-right.png";
 import leftArrowIcon from "../../assets/arrow-left.png";
+import Link from 'next/link';
 
 const ImageSlider = () => {
   const { translate, language } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isBeginning, setIsBeginning] = useState(true);
+const [isEnd, setIsEnd] = useState(false);
   const [translatedTexts, setTranslatedTexts] = useState([
     {
       id: 1,
@@ -133,6 +136,14 @@ const ImageSlider = () => {
 
   useEffect(() => {
     const translateText = async () => {
+      if(language === "en"){
+        setTranslatedText({
+          title: "Where",
+          subtitle: "To Find Us",
+          subtext: "Our clinics are conveniently located across Maryland to serve you better. Select your desired location"
+        });
+        return;
+      }
       const translatedTitle = await translate(translatedText.title);
       const translatedDescription = await translate(translatedText.subtitle);
       const translatedButton = await translate(translatedText.subtext);
@@ -149,18 +160,18 @@ const ImageSlider = () => {
 
 
   const goToPrevSlide = () => {
-    const prevSlide = currentSlide - 1;
-    if (prevSlide >= 0) {
+    if (!isBeginning) {
+      const prevSlide = currentSlide - 1;
       sliderRef.current.slickGoTo(prevSlide);
     }
   };
+  
   const goToNextSlide = () => {
-    const nextSlide = currentSlide + 1;
-    if (nextSlide < translatedTexts.length) {
+    if (!isEnd) {
+      const nextSlide = currentSlide + 1;
       sliderRef.current.slickGoTo(nextSlide);
     }
   };
-
   const settings = {
     infinite: false,
     speed: 500,
@@ -169,6 +180,8 @@ const ImageSlider = () => {
     arrows: false,
     beforeChange: (oldIndex, newIndex) => {
       setCurrentSlide(newIndex);
+      setIsBeginning(newIndex === 0);
+      setIsEnd(newIndex === locationsData.length - settings.slidesToShow);
     },
     responsive: [
       {
@@ -215,7 +228,7 @@ const ImageSlider = () => {
         <h3 className="text-[24px] sm:text-[28px] text-toptext font-semibold font-playfair">
           {translatedText.title}
         </h3>
-        <h1 className="text-[40px] sm:text-[56px] lg:text-[56px] font-playfair font-semibold text-primary md:mb-0 mb-2">
+        <h1 className="text-[40px] sm:text-[56px] lg:text-[56px] font-playfair font-semibold text-primary md:mb-0 mb-2 capitalize">
           {translatedText.subtitle}
         </h1>
         <p className="text-lg md:text-2xl font-nunito max-w-[600px] text-primary mb-4">
@@ -233,9 +246,16 @@ const ImageSlider = () => {
             whileInView="show"
             viewport={{ once: true }}
           >
-            <div className="overflow-hidden">
+            <Link
+          key={index}
+          href={`https://www.google.com/maps?q=${image.latitude},${image.longitude}`}
+          passHref
+          target='_blank'
+          >
+            <div className="overflow-hidden rounded-lg">
               <Image src="https://res.cloudinary.com/dgpd9qgst/image/upload/v1718271349/cld-sample-2.jpg" alt={image.alt} className="w-[460px] h-[460px] object-cover mr-10" width={460} height={460} />
             </div>
+            </Link>
             <h2 className="text-3xl font-playfair text-primary my-4">{image.locationName}</h2>
             <p className="max-w-[400px] font-nunito text-xl text-toptext font-semibold">{image.address}</p>
           </motion.div>
@@ -250,16 +270,20 @@ const ImageSlider = () => {
           ></div>
         </div>
         <div className="flex justify-end w-full md:w-auto md:mr-8 lg:mr-24 mb-4 md:mb-0">
-          <Image
-            src={leftArrowIcon}
-            className="h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 hover:bg-white bg-bgtop p-2 mr-2 rounded-full cursor-pointer"
-            onClick={goToPrevSlide}
-          />
-          <Image
-            src={rightArrowIcon}
-            className="h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 hover:bg-white bg-bgtop p-2 ml-2 rounded-full cursor-pointer"
-            onClick={goToNextSlide}
-          />
+        <Image
+  src={leftArrowIcon}
+  className={`h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 p-2 mr-2 rounded-full cursor-pointer ${
+    isBeginning ? 'bg-gray-300' : 'hover:bg-white bg-bgtop'
+  }`}
+  onClick={isBeginning ? null : goToPrevSlide}
+/>
+<Image
+  src={rightArrowIcon}
+  className={`h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 p-2 ml-2 rounded-full cursor-pointer ${
+    isEnd ? 'bg-gray-300' : 'hover:bg-white bg-bgtop'
+  }`}
+  onClick={isEnd ? null : goToNextSlide}
+/>
         </div>
       </div>
     </div>

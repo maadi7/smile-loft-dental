@@ -82,7 +82,9 @@ const LearnMore = () => {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         >
+          <Link href={'/our-dentists'} passHref >
           <h3 className='text-4xl font-playfair mb-4 text-primary'>{translatedText.meetTeam}</h3>
+          </Link>
         </motion.div>
 
         <motion.div

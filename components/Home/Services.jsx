@@ -37,6 +37,31 @@ const Services = () => {
 
   useEffect(() => {
     const translateTexts = async () => {
+      if(language === "en"){
+        setTranslatedTexts({
+          ourServices: 'Our Services',
+          whatWeDo: 'WHAT WE DO',
+          description: 'Creating confident smiles with personalized dental care and advanced treatments for a healthier, brighter you!',
+          seeMore: 'SEE MORE',
+          invisalign: {
+            title: 'Invisalign',
+            description: 'Achieve a perfect smile with Invisalign\'s clear aligners, a top alternative to braces.',
+          },
+          teethWhitening: {
+            title: 'Teeth Whitening',
+            description: 'Transform your smile with our teeth whitening services for a dazzling, white shine.',
+          },
+          dentalImplants: {
+            title: 'Dental Implants',
+            description: 'Restore your smile with natural-looking, durable dental implants for lasting confidence.',
+          },
+          dentalCrowns: {
+            title: 'Dental Crowns',
+            description: 'Protect and restore damaged teeth with durable dental crowns, ideal for decay or injury.',
+          },
+        })
+        return;
+      }
      
    
       try {
@@ -117,6 +142,7 @@ const Services = () => {
           </Link>
         </motion.div>
 
+                
         <motion.div
           className="col-span-1 row-span-2 bg-box1 p-4 rounded-lg text-center flex flex-col items-center justify-center"
           variants={fadeIn("left", "tween", 0.2, 1)}
@@ -133,6 +159,7 @@ const Services = () => {
             {translatedTexts.invisalign.description}
           </p>
         </motion.div>
+    
 
         <motion.div
           className="col-span-1 row-span-2 bg-box2 p-4 rounded-lg flex flex-col text-center items-center justify-center"

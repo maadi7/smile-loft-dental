@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { AppointmentInput } from '../types/graphql';
 import useTranslation from '../hooks/useTranslation';
+import Loader from './Loader';
 
 const AppointmentForm = () => {
   const { translate, language } = useTranslation();
@@ -133,7 +134,7 @@ const AppointmentForm = () => {
     }
   };
 
-  if (!translations) return <div>Loading translations...</div>;
+  if (!translations) return <Loader/>;
 
   return (
     <div className='py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-8 md:px-16 lg:px-24 bg-bgtop'>

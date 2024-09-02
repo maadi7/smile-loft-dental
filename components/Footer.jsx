@@ -16,10 +16,13 @@ const FooterSection = ({ title, items, pointer }) => {
   useEffect(() => {
     const translateText = async () => {
       const translatedTitle = await translate(title);
-      const translatedItems = await Promise.all(items.map(item => translate(item)));
+      if(title === "Quick Links" || title === "Enlaces rápidos")
+      {
+        const translatedItems = await Promise.all(items.map(item => translate(item)));
+        setTranslatedItems(translatedItems.map(item => item.text || item));
+      }
 
       setTranslatedTitle(translatedTitle.text || title);
-      setTranslatedItems(translatedItems.map(item => item.text || item));
     };
 
     translateText();
@@ -58,7 +61,6 @@ const FooterSection = ({ title, items, pointer }) => {
 const Footer = () => {
   const { translate, language } = useTranslation();
   const [translatedLocations, setTranslatedLocations] = useState(["Affinity Dental", "Glen Burnie", "Landover", "Laurel", "North Potomac", "Shady Grove", "Towne Centre"]);
-  const [translatedDoctors, setTranslatedDoctors] = useState(["Dr. Vaibhav Rai, DDS", "Dr. Laxmi Reddy, DDS", "Dr. Yasmin Akhlagi, DDS", "Dr. Kathee Douglas, DMD", "Dr. Ariana Frank, DMD", "Dr. Trushen Patel, DMD", "Dr. Wachiraya Poonnak, DDS", "Dr. Jeremy Way, DDS", "Dr. Li-Yin Chiang, DDS"]);
   const [translatedLinks, setTranslatedLinks] = useState(["Home", "About us", "Services", "Contact us", "Blogs"]);
 
   const locations = ["Affinity Dental", "Glen Burnie", "Landover", "Laurel", "North Potomac", "Shady Grove", "Towne Centre"];
@@ -66,13 +68,9 @@ const Footer = () => {
   const links = ["Home", "About us", "Services", "Contact us", "Blogs"];
 
   useEffect(() => {
-    const translateText = async () => {
-      const translatedLocations = await Promise.all(locations.map(item => translate(item)));
-      const translatedDoctors = await Promise.all(doctors.map(item => translate(item)));
-      const translatedLinks = await Promise.all(links.map(item => translate(item)));
 
-      setTranslatedLocations(translatedLocations.map(item => item.text || item));
-      setTranslatedDoctors(translatedDoctors.map(item => item.text || item));
+    const translateText = async () => {
+      const translatedLinks = await Promise.all(links.map(item => translate(item)));
       setTranslatedLinks(translatedLinks.map(item => item.text || item));
     };
 
@@ -81,13 +79,13 @@ const Footer = () => {
 
   return (
     <>
-      <div className='md:py-20 md:px-24 px-12 py-16 bg-primary flex flex-col lg:flex-row justify-between text-white'>
+      <div className='md:py-20 md:px-24 px-4 py-16 bg-primary flex flex-col lg:flex-row justify-between text-white'>
         <div>
           <Image src={FooterLogo} alt='footer-logo' className='w-[280px] h-[96px]' />
         </div>
         <div className='flex flex-1 flex-col lg:flex-row justify-around md:ml-10 xl:mr-20'>
-          <FooterSection title="Our Locations" items={translatedLocations} />
-          <FooterSection title="Meet All Doctors" items={translatedDoctors} />
+          <FooterSection title="Our Locations" items={locations} />
+          <FooterSection title="Meet All Doctors" items={doctors} />
           <FooterSection title="Quick Links" items={translatedLinks} pointer />
         </div>
       </div>

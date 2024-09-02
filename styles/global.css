@@ -50,9 +50,10 @@ body {
 }
 @font-face {
   font-family: 'Brogadier';
-  src: url('/public/fonts/brogadier.ttf') format('truetype');
+  src: url('/fonts/brogadier.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 .input:focus{

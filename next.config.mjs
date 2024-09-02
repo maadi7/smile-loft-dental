@@ -3,7 +3,7 @@ import path from 'path';
 
 export default {
   images: {
-    domains: ["res.cloudinary.com", "media.graphassets.com"],
+    domains: ["res.cloudinary.com", "media.graphassets.com", "media.graphcms.com", "ap-south-1.graphassets.com"],
   },
   webpack: (config, { isServer }) => {
     config.module.rules.push({

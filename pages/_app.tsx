@@ -1,5 +1,6 @@
 // pages/_app.tsx
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { Playfair_Display, Nunito, Raleway } from '@next/font/google';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,8 +8,12 @@ import "../styles/global.css"
 import { LoadingProvider } from '../context/LoadingContext';
 import Loader from '../components/Loader';
 import { useLoading } from '../context/LoadingContext';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+//import Navbar from "@/components/Navbar";
+//import Footer from "@/components/Footer";
+import dynamic from "next/dynamic";
+const Navbar = dynamic(()=>import("../components/Navbar"), {});
+const Footer = dynamic(()=>import("../components/Footer"), {});
+
 
 const playfairDisplay = Playfair_Display({
   weight: ['400', '700'],
@@ -36,9 +41,42 @@ function AppContent({ Component, pageProps, router }: AppProps) {
           --font-raleway: ${raleway.style.fontFamily};
           --font-nunito: ${nunito.style.fontFamily};
           --font-satoshi: 'Satoshi', sans-serif;
+           --font-brogadier: 'Brogadier', sans-serif;
         }
       `}</style>
-      
+<Head>
+  <title>Smile Loft Dental</title>
+  <meta
+    name="description"
+    content="Smile Loft Dental: Your trusted dental care provider offering comprehensive dental services with a focus on patient comfort with advanced technology."
+  />
+  <link rel="canonical" href="https://smileloftdental.com/" />
+  <link rel="icon" href="/favicon.ico" />
+  {/* OG Tags */}
+  <meta
+    property="og:title"
+    content="Smile Loft Dental: Your trusted dental care provider offering comprehensive dental services with a focus on patient comfort with advanced technology."
+  />
+  <meta property="og:image" content="/assets/TestimonialDentist.png" />
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:description"
+    content="Smile Loft Dental: Your trusted dental care provider offering comprehensive dental services with a focus on patient comfort with advanced technology."
+  />
+  <meta property="og:url" content="https://smileloftdental.com/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta
+    property="twitter:title"
+    content="Smile Loft Dental - Quality Dental Care"
+  />
+  <meta
+    property="twitter:description"
+    content="Smile Loft Dental: Your trusted dental care provider offering comprehensive dental services with a focus on patient comfort with advanced technology."
+  />
+  <meta property="twitter:url" content="https://smileloftdental.com/" />
+  <meta property="twitter:image" content="/assets/TestimonialDentist.png" />
+</Head>
       {isLoading && <Loader />}
       <Navbar />
       <Component {...pageProps} />

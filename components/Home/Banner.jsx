@@ -43,9 +43,9 @@ const Banner = () => {
         loop
         muted
       ></video>
-      <div className="relative z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+      <div className="relative z-10 flex items-center justify-center w-full h-full bg-black bg-opacity-40">
         <div className="text-center">
-          <h1 className="text-white text-5xl md:text-[110px] mb-4 leading-[70px] md:leading-[130px] font-playfair">
+          <h1 style={{ fontFamily: 'var(--font-brogadier)' }} className="text-white text-5xl md:text-[110px] mb-4 leading-[50px] md:leading-[110px] ">
             <span>{translatedText.title}{language === "es"? " a" : ""}</span><br />
             <span>{"Smile Loft"}</span>
           </h1>

@@ -11,6 +11,7 @@ import minus from "../../assets/minus.png";
 import { blurHashToDataURL } from '@/utils/blurhash';
 import AppointmentForm from '@/components/AppointmentForm';
 import useTranslation from '../../hooks/useTranslation';
+import Head from 'next/head';
 
 interface Service {
   name: string;
@@ -108,8 +109,40 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
 
     translateContent();
   }, [language, service, QnA, translate]);
+  
+  const baseUrl = 'https://smileloftdental.com';
+  const pageUrl = `${baseUrl}/our-services/${service.slug}`;
 
   return (
+    <>
+     <Head>
+        <title>{`${translatedService.name} | Smile Loft Dental Services`}</title>
+        <meta
+          name="description"
+          content={`Learn about our ${translatedService.name} service at Smile Loft Dental. ${translatedService.description.slice(0, 150)}...`}
+        />
+        <link rel="canonical" href={pageUrl} />
+        
+        {/* OG Tags */}
+        <meta property="og:title" content={`${translatedService.name} | Smile Loft Dental Services`} />
+        <meta 
+          property="og:description" 
+          content={`Learn about our ${translatedService.name} service at Smile Loft Dental. ${translatedService.description.slice(0, 150)}...`}
+        />
+        <meta property="og:image" content="/assets/dentist.png" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${translatedService.name} | Smile Loft Dental Services`} />
+        <meta 
+          name="twitter:description" 
+          content={`Learn about our ${translatedService.name} service at Smile Loft Dental. ${translatedService.description.slice(0, 150)}...`}
+        />
+        <meta name="twitter:image" content="/assets/dentist.png" />
+      </Head>
+   
     <div>
       <div className='pb-10 sm:pb-20 px-6 sm:px-24 bg-bgtop  pt-40 flex lg:flex-row flex-col items-center justify-around relative'>
         <div className='flex flex-col items-start mr-0 lg:mr-10 mb-8 lg:mb-0'>
@@ -157,6 +190,7 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
 
       <AppointmentForm/>
     </div>
+    </>
   );
 }
 
