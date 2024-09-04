@@ -89,13 +89,17 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
           {dentist.designation}
         </p>
 
-        <video
-          autoPlay={true}
+        <video controls
+          // autoPlay={true}
           muted={false}
           className="w-full h-full object-cover"
         >
           <source src={dentist.video.url} type="video/mp4" />
         </video>
+        {/* <video width="100%" controls>
+        <source src="/path-to-your-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> */}
 
         <div className='text-lg md:text-2xl leading-8 md:leading-10 font-nunito my-6 md:my-10 text-subtext'>
           {Object.values(translatedVideoJson).map((text, index) => (
@@ -115,10 +119,8 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
             src={dentist.dentistImage.url}
             alt={translatedImageDescription}
             className='w-full h-auto md:w-[563px] md:h-[740px] bg-contain rounded-lg'
-            placeholder='blur'
             width={563}
             height={740}
-            blurDataURL={blurHashToDataURL("LDIrNm4T~AROVC0KMx$$krH=RjyD")}
           />
         </div>
         <div className='flex flex-col items-start justify-start lg:max-w-[50%] lg:ml-10 ml-0'>

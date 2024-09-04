@@ -215,6 +215,7 @@ const [isEnd, setIsEnd] = useState(false);
     currentSlide === totalSlides - settings.slidesToShow
       ? 100
       : ((currentSlide + 1) / totalSlides) * 100;
+      
 
   return (
     <div className="py-0 pl-4 pr-2 md:pr-0 md:pl-12 lg:pl-24 relative split-bg-vertical pb-12 md:pb-24">
@@ -248,7 +249,7 @@ const [isEnd, setIsEnd] = useState(false);
           >
             <Link
           key={index}
-          href={`https://www.google.com/maps?q=${image.latitude},${image.longitude}`}
+          href={`https://www.google.com/maps?q=${image.location.latitude},${image?.location.longitude}`}
           passHref
           target='_blank'
           >

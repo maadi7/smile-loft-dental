@@ -77,7 +77,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className='flex items-center justify-between' >
-          <button 
+          {/* <button 
             className='font-satoshi py-2 md:text-[18px] text-white md:mr-10 text-[16px] mr-5 bg-[#848484] shadow-md rounded-lg bg-opacity-40 backdrop-filter backdrop-blur-lg'
             onClick={toggleLanguage}
           >
@@ -85,6 +85,19 @@ const Navbar = () => {
               EN
             </span> 
             <span className={language === 'es' ? 'font-bold ml-1 text-primary rounded-r-lg bg-box2 md:px-3 px-2 py-2' : 'text-gray-400 md:px-3 px-2 py-2'}>
+              ES
+            </span>
+          </button> */}
+
+          <button 
+            className='font-satoshi py-2 md:text-[18px] text-white md:mr-10 text-[16px] mr-5'
+            onClick={toggleLanguage}
+          >
+            <span className={language === 'en' ? 'underline underline-offset-4 px-2' : ' px-2'}>
+              EN
+            </span> 
+            |
+            <span className={language === 'es' ? 'underline underline-offset-4  px-2 ' : ' px-2'}>
               ES
             </span>
           </button>

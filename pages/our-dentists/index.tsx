@@ -6,6 +6,7 @@ import { graphQLClient } from "@/lib/graphqlClient";
 import { gql } from 'graphql-request';
 import { useRouter } from 'next/router';
 import useTranslation from '@/hooks/useTranslation';
+import { blurHashToDataURL } from '@/utils/blurhash';
 
 interface Dentist {
   name: string;
@@ -13,6 +14,7 @@ interface Dentist {
   description: string;
   dentistImage: { url: string };
   slug: string;
+  blurhash: string;
 }
 
 interface DentistResponse {
@@ -59,6 +61,7 @@ const OurTeam: React.FC = () => {
                 }
                 description
                 slug
+                blurHash
               }
             }
           `
@@ -127,12 +130,12 @@ const OurTeam: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className='flex flex-col md:flex-row w-full px-4 md:px-24 py-12 md:py-24 justify-center items-center'>
-            <div className='p-4 rounded-full bg-box1 flex items-center justify-center mr-10 cursor-pointer hover:bg-box2' onClick={() => handlePrev(currentDoctor)} >
+          <div className='flex flex-col lg:flex-row w-full px-4 2xl:px-24 py-12 md:py-24 justify-center items-center'>
+            <div className='lg:relative absolute top-[35.5rem]  lg:top-0 left-0 xsm:left-10 lg:left-0 p-4 rounded-full bg-box1 flex items-center justify-center mr-10 cursor-pointer hover:bg-box2' onClick={() => handlePrev(currentDoctor)} >
               <Image src={leftArrow} alt='previous' className='w-[24px] h-[21px]' />
             </div>
 
-            <div className='w-full md:w-1/2 mb-8 md:mb-0'>
+            <div className='w-full lg:w-1/2 mb-8 lg:mb-0'>
               <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary uppercase'>{dentists[currentDoctor]?.name}</h2>
               <p className='text-2xl md:text-3xl font-playfair font-bold text-toptext'>{dentists[currentDoctor]?.designation}</p>
               <p className='text-lg md:text-2xl leading-8 md:leading-10 font-nunito my-6 md:my-10 text-subtext'>{translatedDescriptions[currentDoctor]}</p>
@@ -147,28 +150,30 @@ const OurTeam: React.FC = () => {
                   alt={dentists[currentDoctor]?.name}
                   width={563}
                   height={740}
-                  className='w-full max-w-md h-auto md:w-[563px] md:h-[740px] object-cover '
+                  // blurDataURL={blurHashToDataURL(`${dentists[currentDoctor]?.blurhash}`)}
+                  // placeholder='blur'
+                  className='w-full max-w-md h-auto md:w-[563px] md:h-[640px]  '
                 />
               )}
             </div>
-            <div className='p-4 rounded-full bg-box1 flex items-center justify-center cursor-pointer hover:bg-box2' onClick={() => handleNext(currentDoctor)} >
+            <div className='lg:relative absolute top-[35.5rem]  lg:top-0 right-0 xsm:right-10 lg:right-0  p-4 rounded-full bg-box1 flex items-center justify-center cursor-pointer hover:bg-box2' onClick={() => handleNext(currentDoctor)} >
               <Image src={rightArrow} alt='next' className='w-[24px] h-[21px]' />
             </div>
           </div>
-          <div className='!w-full px-4 md:px-10 mt-8 overflow-hidden'>
+          <div className='w-full px-4 md:px-10 mt-8 overflow-hidden'>
             <div
               className='flex transition-transform duration-500 ease-in-out'
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
               {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-                <div key={slideIndex} className='flex-shrink-0 w-full flex justify-center space-x-14'>
+                <div key={slideIndex} className='flex-shrink-0 w-full flex justify-center space-x-4 md:space-x-14'>
                   {dentists.slice(slideIndex * DOCTORS_PER_SLIDE, (slideIndex + 1) * DOCTORS_PER_SLIDE).map((dentist, index) => (
-                    <div key={index} className='flex flex-col w-1/5 max-w-[120px]'>
+                    <div key={index} className='flex flex-col w-1/3 sm:w-1/4 md:w-1/5 max-w-[120px]'>
                       <div
-                        className={`w-36 aspect-square bg-[#d1cfd4] p-2 rounded-lg cursor-pointer transition-all duration-300 ${
+                        className={`w-24 sm:w-32 md:w-36  bg-[#d1cfd4]  rounded-lg cursor-pointer transition-all duration-300 ${
                           (slideIndex * DOCTORS_PER_SLIDE) + index === currentDoctor
-                            ? 'w-40 p-10 pt-5 -mt-5 -ml-3 !overflow-visible rounded-lg'
-                            : 'hover:scale-105 '
+                            ? 'md:w-40   pt-2   !overflow-visible rounded-lg'
+                            : 'hover:scale-105 grayscale'
                         }`}
                         onClick={() => handleDoctorClick((slideIndex * DOCTORS_PER_SLIDE) + index)}
                       >
@@ -182,36 +187,36 @@ const OurTeam: React.FC = () => {
                           />
                         )}
                       </div>
-                      <p className={`mt-2 text-primary text-start text-lg font-playfair 
+                      <p className={`mt-2 text-primary text-start text-xs sm:text-sm md:text-lg font-playfair 
                       ${
                         (slideIndex * DOCTORS_PER_SLIDE) + index === currentDoctor
-                          ? '!text-[22px]'
-                          : ''
+                          ? '!text-[14px] sm:!text-[18px] md:!text-[22px] !min-w-[180px] '
+                          : '!min-w-[140px]'
                       }
                       `}>{dentist.name}</p>
-                      <p className={`text-[10px] text-start text-toptext font-nunito
+                      {/* <p className={`text-[8px] sm:text-[10px] md:text-[12px] text-start text-toptext font-nunito
                       ${
                         (slideIndex * DOCTORS_PER_SLIDE) + index === currentDoctor
-                          ? 'text-[12px]'
-                          : 'hover:scale-105'
-                      }`}
-                      >{dentist.designation}</p>
+                          ? '!text-[10px] sm:!text-[12px] md:!text-[14px]'
+                          : ''
+                      }
+                      `}>{dentist.designation}</p> */}
                     </div>
                   ))}
                 </div>
               ))}
             </div>
           </div>
-          <div className='w-full px-20 mt-6'>
-            <div className='flex justify-center items-center space-x-4'>
-              {Array.from({ length: totalSlides }).map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-primary' : 'bg-box2'}`}
-                  onClick={() => handleDotClick(index)}
-                />
-              ))}
-            </div>
+          <div className='flex justify-center mt-6'>
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <div
+                key={index}
+                onClick={() => handleDotClick(index)}
+                className={`w-3 h-3 rounded-full mx-2 cursor-pointer ${
+                  index === currentSlide ? 'bg-primary' : 'bg-[#ccc]'
+                }`}
+              ></div>
+            ))}
           </div>
         </>
       )}

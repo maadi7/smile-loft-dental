@@ -40,15 +40,17 @@ const FooterSection = ({ title, items, pointer }) => {
         { (translatedTitle === "Enlaces rápidos" || translatedTitle === "Quick Links") && (
           <div className='mt-6'>
             <p className='text-xl font-semibold font-raleway'>Connect With Us</p>
-            <div className='flex items-center mt-4 space-x-4'>
-              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className='inline-block'>
-                <Image src={Instagram} alt='Instagram' className='h-9 w-9 p-0 bg-white rounded-full' />
+            <div className='flex items-center mt-4 space-x-3'>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white  rounded-full border hover:bg-box2'>
+                <Image src={Facebook} alt='Facebook' className='h-5 w-5' objectFit='contain' />
               </a>
-              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className='inline-block'>
-                <Image src={Facebook} alt='Facebook' className='h-9 w-9 p-2 bg-white border border-white rounded-full' objectFit='contain' />
+
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white  rounded-full border hover:bg-box2'>
+                <Image src={Instagram} alt='Instagram' className='h-5 w-5' />
               </a>
-              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className='inline-block'>
-                <Image src={LinkedIn} alt='LinkedIn' className='h-9 w-9 p-1 bg-white border-white rounded-full object-contain' objectFit='contain' />
+              
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white  rounded-full border hover:bg-box2'>
+                <Image src={LinkedIn} alt='LinkedIn' className='h-5 w-5' objectFit='contain' />
               </a>
             </div>
           </div>
