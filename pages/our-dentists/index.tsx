@@ -131,8 +131,8 @@ const OurTeam: React.FC = () => {
       ) : (
         <>
           <div className='flex flex-col lg:flex-row w-full px-4 2xl:px-24 py-12 md:py-24 justify-center items-center'>
-            <div className='lg:relative absolute top-[35.5rem]  lg:top-0 left-0 xsm:left-10 lg:left-0 p-4 rounded-full bg-box1 flex items-center justify-center mr-10 cursor-pointer hover:bg-box2' onClick={() => handlePrev(currentDoctor)} >
-              <Image src={leftArrow} alt='previous' className='w-[24px] h-[21px]' />
+            <div className='lg:relative absolute top-[35.5rem]  lg:top-0 left-0 xsm:left-10 lg:left-0 p-4  rounded-full bg-box1 flex items-center justify-center mr-10 cursor-pointer hover:bg-box2' onClick={() => handlePrev(currentDoctor)} >
+              <Image src={leftArrow} alt='previous' className='md:w-[24px] md:h-[21px] w-[18px] h-[15px]' />
             </div>
 
             <div className='w-full lg:w-1/2 mb-8 lg:mb-0'>
@@ -152,12 +152,13 @@ const OurTeam: React.FC = () => {
                   height={740}
                   // blurDataURL={blurHashToDataURL(`${dentists[currentDoctor]?.blurhash}`)}
                   // placeholder='blur'
-                  className='w-full max-w-md h-auto md:w-[563px] md:h-[640px]  '
+                  objectFit='contain'
+                  className='w-full max-w-md h-auto md:w-[573px] md:h-[600px]  object-contain'
                 />
               )}
             </div>
             <div className='lg:relative absolute top-[35.5rem]  lg:top-0 right-0 xsm:right-10 lg:right-0  p-4 rounded-full bg-box1 flex items-center justify-center cursor-pointer hover:bg-box2' onClick={() => handleNext(currentDoctor)} >
-              <Image src={rightArrow} alt='next' className='w-[24px] h-[21px]' />
+              <Image src={rightArrow} alt='next' className='md:w-[24px] md:h-[21px] w-[18px] h-[15px]' />
             </div>
           </div>
           <div className='w-full px-4 md:px-10 mt-8 overflow-hidden'>

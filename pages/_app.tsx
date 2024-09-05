@@ -8,8 +8,6 @@ import "../styles/global.css"
 import { LoadingProvider } from '../context/LoadingContext';
 import Loader from '../components/Loader';
 import { useLoading } from '../context/LoadingContext';
-//import Navbar from "@/components/Navbar";
-//import Footer from "@/components/Footer";
 import dynamic from "next/dynamic";
 const Navbar = dynamic(()=>import("../components/Navbar"), {});
 const Footer = dynamic(()=>import("../components/Footer"), {});

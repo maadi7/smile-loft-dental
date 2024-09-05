@@ -93,11 +93,11 @@ const Navbar = () => {
             className='font-satoshi py-2 md:text-[18px] text-white md:mr-10 text-[16px] mr-5'
             onClick={toggleLanguage}
           >
-            <span className={language === 'en' ? 'underline underline-offset-4 px-2' : ' px-2'}>
+            <span className={language === 'en' ? 'underline underline-offset-4 md:px-2 px-1' : 'md:px-2 px-1'}>
               EN
             </span> 
             |
-            <span className={language === 'es' ? 'underline underline-offset-4  px-2 ' : ' px-2'}>
+            <span className={language === 'es' ? 'underline underline-offset-4  md:px-2 px-1': 'md:px-2 px-1'}>
               ES
             </span>
           </button>

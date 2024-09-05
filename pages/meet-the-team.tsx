@@ -120,8 +120,8 @@ const Team = () => {
             <div
                 className={`overflow-hidden transition-all duration-500 ${openSection === section.teamName ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}
             >
-                <div className="my-5 sm:my-10 p-2 sm:p-4 rounded-lg">
-                    <ul className="list-none flex flex-wrap space-x-12">
+                <div className="my-0 sm:my-10 p-2 sm:p-4 rounded-lg">
+                    <ul className="list-none flex flex-wrap md:space-x-12 space-x-6">
                         {section.member.map((member, idx) => (
                             <li className='flex flex-col  transition-all duration-300 items-start mb-5 w-24 sm:w-32 md:w-[180px] md:h-[200px] rounded-lg cursor-pointer hover:scale-105' key={idx}>
                                 <Image 
