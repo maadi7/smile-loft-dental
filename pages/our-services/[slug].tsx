@@ -19,6 +19,8 @@ interface Service {
   slug: string;
   subSection: { [key: string]: string[] };
   serviceImage: {url: string}
+  review: string;
+  reviewersName: string;
 }
 
 interface ServiceResponse {
@@ -82,6 +84,7 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
       try {
         const translatedServiceName = await translate(service.name);
         const translatedServiceDescription = await translate(service.description);
+        const translatedReview = await translate(service.review);
 
         const translatedQnA = await Promise.all(
           Object.entries(QnA).map(async ([title, data]) => {
@@ -95,6 +98,7 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
           ...service,
           name: translatedServiceName.text || service.name,
           description: translatedServiceDescription.text || service.description,
+          review: translatedReview.text || service.review
         });
 
         const translatedQnAObject = translatedQnA.reduce((acc, { title, data }) => {
@@ -172,8 +176,10 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
       <div className='py-10 sm:py-16 md:py-20 px-6 sm:px-12 md:px-24 bg-bgbottom flex items-center justify-center text-center'>
         <div className='relative'>
           <h2 className='font-nunito text-lg sm:text-xl md:text-2xl leading-7 sm:leading-8 md:leading-10 max-w-full sm:max-w-[800px] md:max-w-[1000px]'>
-            I recently had teeth whitening done at Smile Loft Dental, and I am thrilled with the results! The staff was friendly and professional, and the office was clean and modern. Dr. Rai explained everything clearly and made me feel comfortable. The procedure was quick and painless, and my teeth look amazing. Highly recommend Smile Loft Dental for a brighter smile!
+          
+            {translatedService.review}
           </h2>
+          <p className='font-nunito text-sm font-semibold sm:text-lg md:text-xl italic text-center mt-5' >-{service.reviewersName}</p>
           <Image 
             src={qoutesTop} 
             alt='"' 
@@ -210,6 +216,8 @@ export async function getServerSideProps({ params }: { params: any }) {
         serviceImage{
           url
         }
+        reviewersName
+        review
       }
     }
   `;
