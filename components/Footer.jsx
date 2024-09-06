@@ -67,7 +67,7 @@ const Footer = () => {
 
   const locations = ["Affinity Dental", "Glen Burnie", "Landover", "Laurel", "North Potomac", "Shady Grove", "Towne Centre"];
   const doctors = ["Dr. Vaibhav Rai, DDS", "Dr. Laxmi Reddy, DDS", "Dr. Yasmin Akhlagi, DDS", "Dr. Kathee Douglas, DMD", "Dr. Ariana Frank, DMD", "Dr. Trushen Patel, DMD", "Dr. Wachiraya Poonnak, DDS", "Dr. Jeremy Way, DDS", "Dr. Li-Yin Chiang, DDS"];
-  const links = ["Home", "About us", "Services", "Contact us", "Blogs"];
+  const links = ["Home", "About us", "Services", "Blogs"];
 
   useEffect(() => {
 

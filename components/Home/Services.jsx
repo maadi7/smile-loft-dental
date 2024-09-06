@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import servicesImage from "../../assets/services.png";
@@ -6,6 +7,7 @@ import { fadeIn } from '../../utils/motion';
 import Link from "next/link";
 import { blurHashToDataURL } from '@/utils/blurhash';
 import useTranslation from '../../hooks/useTranslation';
+import { useRouter } from 'next/router';
 
 
 const Services = () => {
@@ -16,7 +18,7 @@ const Services = () => {
     ourServices: 'Our Services',
     whatWeDo: 'WHAT WE DO',
     description: 'Creating confident smiles with personalized dental care and advanced treatments for a healthier, brighter you!',
-    seeMore: 'SEE MORE',
+    seeMore: 'VIEW ALL',
     invisalign: {
       title: 'Invisalign',
       description: 'Achieve a perfect smile with Invisalign\'s clear aligners, a top alternative to braces.',
@@ -42,7 +44,7 @@ const Services = () => {
           ourServices: 'Our Services',
           whatWeDo: 'WHAT WE DO',
           description: 'Creating confident smiles with personalized dental care and advanced treatments for a healthier, brighter you!',
-          seeMore: 'SEE MORE',
+          seeMore: 'VIEW ALL',
           invisalign: {
             title: 'Invisalign',
             description: 'Achieve a perfect smile with Invisalign\'s clear aligners, a top alternative to braces.',
@@ -119,6 +121,14 @@ const Services = () => {
     translateTexts();
   }, [language]);
 
+  const router = useRouter();
+
+  const handleClick = (serviceName) => {
+    if (typeof window !== "undefined") {
+      router.push(`/our-services/${serviceName}`);
+    }
+  };
+
   return (
     <div className="bg-bgtop flex h-full w-full items-center justify-center py-16 px-4 2xl:px-24 !overflow-hidden">
       <div className="grid h-full w-full gap-8 p-2 grid-cols-1 sm:grid-cols-2 custom-md:grid-cols-3 custom-lg:grid-cols-4 grid-rows-12 sm:grid-rows-8  custom-lg:grid-rows-4 custom-md:grid-rows-6">
@@ -136,83 +146,91 @@ const Services = () => {
             {translatedTexts.description}
           </p>
           <Link href="/our-services">
-            <button className='px-6 sm:px-8 py-3 text-sm sm:text-xl font-nunito transition-all duration-300 hover:bg-box2 hover:text-primary text-[#F7F6F3] bg-primary rounded-lg shadow-lg'>
+            <button className='px-6 sm:px-8 py-3 text-sm sm:text-xl font-nunito transition-all duration-300 hover:bg-box2 hover:text-primary text-[#F7F6F3] bg-primary rounded-lg'>
               {translatedTexts.seeMore}
             </button>
           </Link>
         </motion.div>
 
                 
+
+        
         <motion.div
-          className="col-span-1 row-span-2 bg-box1 p-4 rounded-lg text-center flex flex-col items-center justify-center"
+          className="col-span-1 row-span-2 bg-box1 p-4 rounded-lg text-center flex flex-col items-center justify-center cursor-pointer"
           variants={fadeIn("left", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
-        >
-          <Link href={"/our-services/invisalign"}>
+          onClick={()=>handleClick("invisalign")}
+          
+          >
+        
             <h3 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary'>{translatedTexts.invisalign.title}</h3>
-          </Link>
           <p className='text-[18px] font-nunito text-toptext'>
             {translatedTexts.invisalign.description}
           </p>
+        
         </motion.div>
     
 
         <motion.div
-          className="col-span-1 row-span-2 bg-box2 p-4 rounded-lg flex flex-col text-center items-center justify-center"
+          className="col-span-1 row-span-2 bg-box2 p-4 rounded-lg flex flex-col text-center items-center justify-center cursor-pointer"
           variants={fadeIn("left", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
+          onClick={()=>handleClick("teeth-whitening")}
         >
-          <Link href={"/our-services/teeth-whitening"}>
+          
             <h3 className='text-3xl lg:text-4xl font-playfair mb-4 text-center text-primary'>
               {translatedTexts.teethWhitening.title}
             </h3>
-          </Link>
+          
           <p className='text-[18px]  font-nunito text-toptext'>
             {translatedTexts.teethWhitening.description}
           </p>
         </motion.div>
 
         <motion.div
-          className="col-span-1 row-span-2 bg-box1 p-4 rounded-lg flex flex-col text-center items-center justify-center"
+          className="col-span-1 row-span-2 bg-box1 p-4 rounded-lg flex flex-col text-center items-center justify-center cursor-pointer"
           variants={fadeIn("right", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
+          onClick={()=>handleClick("dental-implants")}
+          
         >
-          <Link href={"/our-services/dental-implants"}>
+        
             <h3 className='text-3xl lg:text-4xl font-playfair text-center mb-4 text-primary'>
               {translatedTexts.dentalImplants.title}
             </h3>
-          </Link>
+        
           <p className='text-[18px]  font-nunito text-toptext'>
             {translatedTexts.dentalImplants.description}
           </p>
         </motion.div>
 
         <motion.div
-          className="col-span-1 row-span-2 bg-box2 p-4 rounded-lg text-center flex flex-col items-center justify-center"
+          className="col-span-1 row-span-2 bg-box2 p-4 rounded-lg text-center flex flex-col items-center justify-center cursor-pointer"
           variants={fadeIn("right", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
+          onClick={()=>handleClick("dental-crowns")}
         >
-          <Link href={"/our-services/dental-crowns"}>
+          
             <h3 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary'>
               {translatedTexts.dentalCrowns.title}
             </h3>
-          </Link>
+          
           <p className='text-[18px]    font-nunito text-toptext'>
             {translatedTexts.dentalCrowns.description}
           </p>

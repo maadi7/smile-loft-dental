@@ -48,14 +48,14 @@ const Testimonials = () => {
 
   return (
     <motion.div 
-      className='bg-bgbottom flex flex-col lg:flex-row h-full w-full py-12 md:py-24 items-center justify-between relative px-4 md:px-12 lg:px-24'
+      className='bg-bgbottom flex flex-col lg:flex-row h-full w-full py-12 md:py-24 items-center justify-evenly relative px-4 md:px-12 lg:px-24'
     >
       <motion.div 
         variants={fadeIn("up", "tween", 0.2, 1)} 
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className='absolute w-full h-[300px] md:w-[481px] md:h-[720px] top-0 left-0 hidden md:block'
+        className='absolute w-full h-[300px] md:w-[481px] md:h-[700px] top-0 left-0 hidden md:block'
       >
         <Image src={BlackWallpaper} alt='blackwallper' layout='fill' objectFit='cover' />
       </motion.div>
@@ -69,13 +69,13 @@ const Testimonials = () => {
         <Image 
           src={TestimonialDentist} 
           alt='reviews' 
-          className='w-full h-auto md:w-[563px] md:h-[740px] bg-contain rounded-lg' 
+          className='w-full h-auto md:w-[563px] md:h-[720px] bg-contain rounded-lg' 
           placeholder='blur'
           blurDataURL={blurHashToDataURL("LDIrNm4T~AROVC0KMx$$krH=RjyD")}
         />
       </motion.div>
       
-      <motion.div className='flex flex-col items-start lg:max-w-[50%] lg:ml-10 ml-0'
+      <motion.div className='flex flex-col items-start lg:max-w-[50%] lg:ml-10'
         variants={fadeIn("up", "tween", 0.2, 1)} 
         initial="hidden"
         whileInView="show"
@@ -87,7 +87,7 @@ const Testimonials = () => {
         <h1 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary'>
           {translatedText.reviewsTitle}
         </h1>
-        <Image src={qoutes} alt='decorator' className='h-[40px] md:h-[80px] w-[50px] md:w-[100px] mb-8 md:mb-20' />
+        <Image src={qoutes} alt='decorator' className='h-[40px] md:h-[80px] w-[50px] md:w-[100px] mb-8 md:mb-16' />
         
         <motion.p className='text-lg md:text-2xl font-nunito max-w-[600px] text-primary mb-5 md:mb-10'
           variants={fadeIn("right", "tween", 0.2, 1)} 

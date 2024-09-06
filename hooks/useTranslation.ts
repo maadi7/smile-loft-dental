@@ -10,7 +10,7 @@ const useTranslation = () => {
       return text;
     }
     
- //return text;
+ return text;
 
     const cacheKey = `${language}-${text}`;
     if (translationsCache.current[cacheKey]) {

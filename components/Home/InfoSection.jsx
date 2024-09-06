@@ -78,7 +78,7 @@ const InfoSection = () => {
             placeholder='blur'
             blurDataURL={blurHashToDataURL("LFN0_0Dhtl.9-:M{og_ND%M_I9j^")}
             objectFit='cover'
-            className='2xl:w-[927px] custom-md:w-[800px] w-[90%]  2xl:h-[620px] h-[400px]'
+            className='2xl:w-[927px] custom-md:w-[700px] w-[90%]  2xl:h-[620px] custom-md:h-[400px] h-[300px]'
           />
           <div className='flex flex-col items-start justify-between 2x:ml-24 mt-5 lg:mt-0 md:ml-10 pl-2 lg:py-12 py-4 max-w-[550px] pr-4'>
             <p className='text-xl sm:text-2xl font-nunito text-primary leading-8 2xl:mb-16 sm:mb-10 mb-5'>
