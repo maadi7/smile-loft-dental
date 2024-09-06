@@ -10,6 +10,7 @@ interface Service {
   name: string;
   description: string;
   slug: string;
+  serviceImage: {url: string}
 }
 
 interface ServiceResponse {
@@ -32,6 +33,9 @@ const Ourservices: React.FC = () => {
                 name
                 description
                 slug
+                serviceImage {
+                  url
+                }
               }
             }
           `
@@ -65,12 +69,12 @@ const Ourservices: React.FC = () => {
   }, [services, translate, language]);
 
   const colors = ["#E7E4DA", "#CFC9B5"];
-  const baseUrl = 'https://smileloftdental.com'; // Replace with your actual base URL
+  const baseUrl = 'https://smileloftdental.com';
   const pageUrl = `${baseUrl}/our-services`;
 
   return (
     <>
-       <Head>
+      <Head>
         <title>Our Dental Services | Smile Loft Dental</title>
         <meta
           name="description"
@@ -98,36 +102,43 @@ const Ourservices: React.FC = () => {
         <meta name="twitter:image" content="/assets/dentist.png" />
       </Head>
 
-    <div className='bg-bgtop pt-20 pb-10 flex justify-center items-center'>
-      {loading ? (
-        <div className="min-h-[80vh] flex items-center justify-center space-x-4 z-50">
-          <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-0"></div>
-          <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-1"></div>
-          <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-2"></div>
-        </div>
-      ) : (
-        <div className='flex flex-col' >
-          <h2 className='text-center pt-10 md:text-7xl text-5xl  font-playfair text-primary' >Our Services</h2>
-          <div className="flex h-full w-full items-center justify-center md:py-16 py-8 px-4 lg:px-20 !overflow-hidden">
-            <div className="grid h-full w-full gap-8 p-2 grid-cols-1 sm:grid-cols-2 custom-md:grid-cols-3 custom-lg:grid-cols-3 grid-rows-12 sm:grid-rows-8 custom-lg:grid-rows-10 custom-md:grid-rows-6">
-              {translatedServices && translatedServices.map((service, index) => (
-                <Link
-                  key={service.slug}
-                  href={`our-services/${service.slug}`}
-                  className="col-span-1 row-span-10 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:scale-105 transition-all"
-                  style={{ backgroundColor: colors[index % colors.length] }}
-                >
-                  <h2 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary'>
-                    {service.name}
-                  </h2>
-                  {/* <p className='text-gray-700'>{service.description}</p> */}
-                </Link>
-              ))}
+      <div className='bg-bgtop pt-20 pb-10 flex justify-center items-center'>
+        {loading ? (
+          <div className="min-h-[80vh] flex items-center justify-center space-x-4 z-50">
+            <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-0"></div>
+            <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-1"></div>
+            <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-2"></div>
+          </div>
+        ) : (
+          <div className='flex flex-col' >
+            <h2 className='text-center pt-10 md:text-7xl text-5xl font-playfair text-primary'>Our Services</h2>
+            <div className="flex h-full w-full items-center justify-center md:py-16 py-8 px-4 lg:px-20 !overflow-hidden">
+              <div className="grid h-full w-full gap-8 p-2 grid-cols-1 sm:grid-cols-2 custom-md:grid-cols-3 custom-lg:grid-cols-3 grid-rows-12 sm:grid-rows-8 custom-lg:grid-rows-10 custom-md:grid-rows-6">
+                {translatedServices && translatedServices.map((service, index) => (
+                  <Link
+                    key={service.slug}
+                    href={`our-services/${service.slug}`}
+                    className="col-span-1 row-span-10 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:scale-105 transition-all relative group"
+                    style={{ backgroundColor: colors[index % colors.length] }}
+                  >
+                    <h2 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary z-10'>
+                      {service.name}
+                    </h2>
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center sm:block hidden"
+                      style={{backgroundImage: `url(${service.serviceImage.url})`}}
+                    ></div>
+                    <div 
+                      className="absolute inset-0 rounded-lg bg-cover bg-center opacity-50 sm:hidden"
+                      style={{backgroundImage: `url(${service.serviceImage.url})`}}
+                    ></div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </>
   );
 }

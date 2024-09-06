@@ -14,7 +14,7 @@ const Footer = dynamic(()=>import("../components/Footer"), {});
 
 
 const playfairDisplay = Playfair_Display({
-  weight: ['400', '700'],
+  weight: ['400', '700', '600'],
   subsets: ['latin'],
 });
 

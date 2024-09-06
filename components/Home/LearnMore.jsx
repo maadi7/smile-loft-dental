@@ -14,26 +14,26 @@ const LearnMore = () => {
   const router = useRouter();
 
   const [translatedText, setTranslatedText] = useState({
-    meetTeam: "Meet Our Team",
+    meetTeam: "Our Team",
     ourServices: "Our Services",
     readBlogs: "Our Blogs",
     contactUs: "Contact Us",
     claimOffer: "Claim your Free Exam and X-Ray worth $250!",
     getOffer: "GET OFFER",
-    meetDentist: "Meet Our Dentists"
+    meetDentist: "Our Dentists"
   });
 
   useEffect(() => {
     const translateText = async () => {
       if (language === "en") {
         setTranslatedText({
-          meetTeam: "Meet The Team",
+          meetTeam: "Our Team",
           ourServices: "Our Services",
           readBlogs: "Our Blogs",
           contactUs: "Contact Us",
           claimOffer: "Claim your Free Exam and X-Ray worth $250!",
           getOffer: "GET OFFER",
-          meetDentist: "Meet Our Dentists"
+          meetDentist: "Our Dentists"
         });
         return;
       }

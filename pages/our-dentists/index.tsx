@@ -136,8 +136,8 @@ const OurTeam: React.FC = () => {
             </div>
 
             <div className='w-full lg:w-1/2 mb-8 lg:mb-0'>
-              <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary uppercase'>{dentists[currentDoctor]?.name}</h2>
-              <p className='text-2xl md:text-3xl font-playfair font-bold text-toptext'>{dentists[currentDoctor]?.designation}</p>
+              <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5  text-primary uppercase'>{dentists[currentDoctor]?.name}</h2>
+              <p className='text-2xl md:text-3xl font-playfair font-semibold text-toptext'>{dentists[currentDoctor]?.designation}</p>
               <p className='text-lg md:text-2xl leading-8 md:leading-10 font-nunito my-6 md:my-10 text-subtext'>{translatedDescriptions[currentDoctor]}</p>
               <button onClick={() => handleReadMoreClick(dentists[currentDoctor]?.slug)} className='mb-2 sm:px-8 px-6 py-3 sm:text-xl text-sm font-nunito transition-all duration-300 text-[#F7F6F3] bg-primary rounded-lg shadow-xl hover:bg-box2 hover:text-primary'>
                 {translatedReadMore}

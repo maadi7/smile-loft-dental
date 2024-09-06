@@ -18,6 +18,7 @@ interface Service {
   description: string;
   slug: string;
   subSection: { [key: string]: string[] };
+  serviceImage: {url: string}
 }
 
 interface ServiceResponse {
@@ -144,7 +145,7 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
       </Head>
    
     <div>
-      <div className='pb-10 sm:pb-20 px-6 sm:px-24 bg-bgtop  pt-40 flex lg:flex-row flex-col items-center justify-around relative'>
+      <div className='pb-10 sm:pb-20 px-4 sm:px-24 bg-bgtop  pt-40 flex lg:flex-row flex-col items-center justify-around relative'>
         <div className='flex flex-col items-start mr-0 lg:mr-10 mb-8 lg:mb-0'>
           <h3 className='text-2xl sm:text-[28px] text-toptext font-semibold font-playfair md:mb-5 mb-2'>Our Services</h3>
           <h1 className='text-4xl sm:text-[56px] sm:leading-[50px] font-playfair font-semibold mb-3 sm:mb-5 text-primary uppercase'>{translatedService.name}</h1>
@@ -152,9 +153,11 @@ const Service: React.FC<ServiceProps> = ({ service, QnA }) => {
         </div>
         <div>
           <Image 
-            src={serviceImage} 
+            src={service.serviceImage.url} 
+            width={585}
+            height={380}
             alt='reviews' 
-            className='w-full sm:w-[584px] h-auto sm:h-[380px] mt-5 sm:mt-10 bg-contain relative z-10' 
+            className='w-full sm:w-[584px] h-auto sm:h-[380px] mt-0 sm:mt-10 bg-contain relative z-10 rounded-lg' 
             placeholder='blur'
             blurDataURL={blurHashToDataURL("L4L|6|0000O[000C^Y.m4T_2AK01")}
           />
@@ -204,6 +207,9 @@ export async function getServerSideProps({ params }: { params: any }) {
         description
         slug
         subSection
+        serviceImage{
+          url
+        }
       }
     }
   `;

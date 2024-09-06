@@ -82,10 +82,10 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
   return (
     <div className='bg-bgtop pt-40 pb-10 flex flex-col justify-center'>
       <div className='md:px-24 px-4'>
-        <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary uppercase'>
+        <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5  text-primary uppercase'>
           {dentist.name}
         </h2>
-        <p className='text-2xl md:text-3xl font-playfair font-bold text-toptext md:mb-10 mb-5'>
+        <p className='text-2xl md:text-3xl font-playfair font-semibold text-toptext md:mb-10 mb-5'>
           {dentist.designation}
         </p>
 
@@ -111,14 +111,14 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
       </div>
 
       <div className='md:mt-20 flex flex-col lg:flex-row h-full w-full py-4 md:py-24 items-center justify-between relative px-4 md:px-12 lg:px-24'>
-        <div className='absolute w-full h-[300px] md:w-[481px] md:h-[720px] top-0 left-0 hidden md:block'>
+        <div className='absolute w-full h-[300px] md:w-[481px] md:h-[680px] top-0 left-0 hidden md:block'>
           <Image src={BlackWallpaper} alt='Dentist Image' layout='fill' objectFit='cover' />
         </div>
         <div className='relative mb-8 lg:mb-0'>
           <Image
             src={dentist.dentistImage.url}
             alt={translatedImageDescription}
-            className='w-full h-auto md:w-[563px] md:h-[740px] bg-contain rounded-lg'
+            className='w-full h-auto md:w-[543px] md:h-[690px] bg-contain rounded-lg'
             width={563}
             height={740}
           />
