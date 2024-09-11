@@ -5,6 +5,8 @@ import { graphQLClient } from "../../lib/graphqlClient";
 import BlackWallpaper from "../../assets/black-wallpaper.png";
 import { gql } from 'graphql-request';
 import useTranslation from '@/hooks/useTranslation';
+import Head from 'next/head';
+import CustomLink from '@/utils/customLink';
 
 interface Dentist {
   name: string;
@@ -17,6 +19,7 @@ interface Dentist {
   videoText: { raw: any };
   videoJson: { [key: string]: string };
   imageText: { [key: string]: string };
+  blurHash: string;
 }
 
 interface DentistProps {
@@ -79,9 +82,50 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
     translateContent();
   }, [dentist, translate, language]);
 
+  const baseUrl = 'https://smileloftdental.com';
+  const pageUrl = `${baseUrl}/our-dentists/${dentist.slug}`;
+
   return (
+    <>
+    <Head>
+  <title>{`Meet ${dentist.name} | Smile Loft Dental`}</title>
+  <meta
+    name="description"
+    content={`Meet ${dentist.name}, ${dentist.designation}, at Smile Loft Dental. Discover their journey and commitment to providing exceptional dental care.`}
+  />
+  <link rel="canonical" href={pageUrl} />
+  
+  {/* OG Tags */}
+  <meta property="og:title" content={`Meet ${dentist.name} | Smile Loft Dental`} />
+  <meta 
+    property="og:description" 
+    content={`Meet ${dentist.name}, ${dentist.designation}, at Smile Loft Dental. Discover their journey and commitment to providing exceptional dental care.`}
+  />
+  <meta property="og:image" content={dentist.dentistImage.url || "/assets/TestimonialDentist.png"} />
+  <meta property="og:url" content={pageUrl} />
+  <meta property="og:type" content="website" />
+  
+  {/* Twitter Tags */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`Meet ${dentist.name} | Smile Loft Dental`} />
+  <meta 
+    name="twitter:description" 
+    content={`Meet ${dentist.name}, ${dentist.designation}, at Smile Loft Dental. Discover their journey and commitment to providing exceptional dental care.`}
+  />
+  <meta name="twitter:image" content={dentist.dentistImage.url || "/assets/TestimonialDentist.png"} />
+</Head>
+{/* <div className='pt-32 bg-bgtop xl:px-24 px-4' >
+<CustomLink
+  items={[
+    { href: '/', label: 'Home' },
+    { href: '/our-dentists', label: 'Meet the Dentists' },
+    { href: `/our-dentists/${dentist.slug}`, label: `${dentist.name}` }
+  ]}
+/>
+  </div> */}
+
     <div className='bg-bgtop pt-40 pb-10 flex flex-col justify-center'>
-      <div className='md:px-24 px-4'>
+      <div className='xl:px-24 px-4'>
         <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5  text-primary uppercase'>
           {dentist.name}
         </h2>
@@ -110,7 +154,7 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
         </div>
       </div>
 
-      <div className='md:mt-20 flex flex-col lg:flex-row h-full w-full py-4 md:py-24 items-center justify-between relative px-4 md:px-12 lg:px-24'>
+      <div className='md:mt-20 flex flex-col lg:flex-row h-full w-full py-4 md:py-24 items-center justify-between relative px-4  xl:px-24'>
         <div className='absolute w-full h-[300px] md:w-[481px] md:h-[680px] top-0 left-0 hidden md:block'>
           <Image src={BlackWallpaper} alt='Dentist Image' layout='fill' objectFit='cover' />
         </div>
@@ -118,16 +162,18 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
           <Image
             src={dentist.dentistImage.url}
             alt={translatedImageDescription}
-            className='w-full h-auto md:w-[543px] md:h-[690px] bg-contain rounded-lg'
-            width={563}
-            height={740}
+            className='w-full h-auto md:w-[543px] md:h-[690px] bg-cover rounded-lg'
+            placeholder='blur'
+            blurDataURL={blurHashToDataURL(dentist.blurHash)}
+            width={543}
+            height={690}
           />
         </div>
-        <div className='flex flex-col items-start justify-start lg:max-w-[50%] lg:ml-10 ml-0'>
-          <h1 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary uppercase'>
+        <div className='flex flex-col items-start justify-start lg:max-w-[50%] lg:ml-10 ml-0 md:mt-20'>
+          <h1 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] sm:leading-[44px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary uppercase '>
             {translatedHeading}
           </h1>
-          <p className='text-lg md:text-2xl font-nunito max-w-[600px] text-primary mb-5 md:mb-10 leading-8 md:leading-10'>
+          <p className='text-lg md:text-2xl font-nunito lg:max-w-[600px] text-primary mb-5 md:mb-10 leading-8 md:leading-10'>
             {Object.values(translatedImageText).map((text, index) => (
               <div key={index} className="my-6">
                 {text}
@@ -137,6 +183,7 @@ const Dentists: React.FC<DentistProps> = ({ dentist }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
@@ -159,6 +206,7 @@ export async function getServerSideProps({ params }: { params: any }) {
         videoJson
         slug
         imageText
+        blurHash
       }
     }
   `;

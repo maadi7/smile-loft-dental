@@ -29,7 +29,7 @@ const FooterSection = ({ title, items, pointer }) => {
   }, [language]);
 
   return (
-    <div className='mt-20 lg:mt-0 flex flex-col items-start'>
+    <div className='mt-20 lg:mt-0 flex flex-col items-start '>
       <p className='text-xl font-raleway font-semibold'>{translatedTitle}</p>
       <div className='text-[18px] my-2 flex flex-col'>
         {translatedItems.map((item, index) => (

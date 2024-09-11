@@ -13,6 +13,7 @@ import sampleImage2 from '../../assets/slider2.png';
 import rightArrowIcon from "../../assets/arrow-right.png";
 import leftArrowIcon from "../../assets/arrow-left.png";
 import Link from 'next/link';
+import { blurHashToDataURL } from '@/utils/blurhash';
 
 const ImageSlider = () => {
   const { translate, language } = useTranslation();
@@ -57,6 +58,11 @@ const [isEnd, setIsEnd] = useState(false);
                                 latitude
                                 longitude
                             }
+                            locationImage {
+                                  url
+                            }
+                            blurHash
+                           
                         }
                     }
                 `
@@ -64,6 +70,7 @@ const [isEnd, setIsEnd] = useState(false);
 
             if (response && response.locationDetails) {
               setLocationsData(response.locationDetails);
+
            
                 console.log(response.locationDetails);
             }
@@ -254,7 +261,7 @@ const [isEnd, setIsEnd] = useState(false);
           target='_blank'
           >
             <div className="overflow-hidden rounded-lg">
-              <Image src="https://res.cloudinary.com/dgpd9qgst/image/upload/v1718271349/cld-sample-2.jpg" alt={image.alt} className="w-[460px] h-[460px] object-cover mr-10" width={460} height={460} />
+              <Image src={image.locationImage.url}  alt={image.alt} className="w-[460px] h-[460px] object-cover mr-10" width={460} height={460} quality={100} />
             </div>
             </Link>
             <h2 className="text-3xl font-playfair text-primary my-4">{image.locationName}</h2>

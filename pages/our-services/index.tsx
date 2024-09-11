@@ -138,9 +138,6 @@ const Ourservices: React.FC = () => {
                   style={{ backgroundImage: `url(${service.serviceImage.url})` }}
                 ></div>
               </Link>
-              
-               
-                
                 ))}
               </div>
             </div>

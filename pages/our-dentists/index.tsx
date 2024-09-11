@@ -7,6 +7,9 @@ import { gql } from 'graphql-request';
 import { useRouter } from 'next/router';
 import useTranslation from '@/hooks/useTranslation';
 import { blurHashToDataURL } from '@/utils/blurhash';
+import CustomLink from '@/utils/customLink';
+import Head from 'next/head';
+import Link from 'next/link';
 
 interface Dentist {
   name: string;
@@ -69,6 +72,7 @@ const OurTeam: React.FC = () => {
 
         if (response && response.ourDentists) {
           setDentists(response.ourDentists);
+          // console.log(response.ourDentists);
         }
       } catch (error) {
         console.error("GraphQL Error:", error);
@@ -120,7 +124,48 @@ const OurTeam: React.FC = () => {
     setCurrentDoctor(index + 1);
   };
 
+  const baseUrl = 'https://smileloftdental.com';
+  const pageUrl = `${baseUrl}/our-dentists`;
   return (
+    <> 
+   <Head>
+  <title>Meet Our Dentists | Smile Loft Dental</title>
+  <meta
+    name="description"
+    content="Get to know the expert team of dentists at Smile Loft Dental. Our skilled professionals are dedicated to providing top-notch dental care for you and your family."
+  />
+  <link rel="canonical" href={pageUrl} />
+  
+  {/* OG Tags */}
+  <meta property="og:title" content="Meet Our Dentists | Smile Loft Dental" />
+  <meta 
+    property="og:description" 
+    content="Get to know the expert team of dentists at Smile Loft Dental. Our skilled professionals are dedicated to providing top-notch dental care for you and your family."
+  />
+  <meta property="og:image" content="/assets/dentist.png" />
+  <meta property="og:url" content={pageUrl} />
+  <meta property="og:type" content="website" />
+  
+  {/* Twitter Tags */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Meet Our Dentists | Smile Loft Dental" />
+  <meta 
+    name="twitter:description" 
+    content="Get to know the expert team of dentists at Smile Loft Dental. Our skilled professionals are dedicated to providing top-notch dental care for you and your family."
+  />
+  <meta name="twitter:image" content="/assets/dentist.png" />
+</Head>
+
+{/* <div className='pt-32 bg-bgtop px-36' >
+<CustomLink
+  items={[
+    { href: '/', label: 'Home' },
+    { href: '/our-dentists', label: 'Meet the Dentists' }
+  ]}
+/>
+  </div> */}
+
+   
     <div className='bg-bgtop pt-20 pb-10 flex flex-col justify-center items-center'>
       {loading ? (
         <div className="min-h-[80vh] flex items-center justify-center space-x-4 z-50">
@@ -150,8 +195,7 @@ const OurTeam: React.FC = () => {
                   alt={dentists[currentDoctor]?.name}
                   width={563}
                   height={740}
-                  // blurDataURL={blurHashToDataURL(`${dentists[currentDoctor]?.blurhash}`)}
-                  // placeholder='blur'
+                 
                   objectFit='contain'
                   className='w-full max-w-md h-auto md:w-[573px] md:h-[600px]  object-contain'
                 />
@@ -222,6 +266,7 @@ const OurTeam: React.FC = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 
