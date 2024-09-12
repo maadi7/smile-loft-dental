@@ -36,7 +36,23 @@ const AppointmentForm = () => {
     successMessage: string;
     failureMessage: string;
     unknownError: string;
-  } | null>(null);
+  } | null>({
+    fullNamePlaceholder: "Full Name",
+    phoneNumberPlaceholder: "Phone Number",
+    emailPlaceholder: "Email Id",
+    patientTypePlaceholder: "Patient Type",
+    treatmentPlaceholder: "Treatment",
+    insurance: "Insurance",
+    location: "Location",
+    messagePlaceholder: "Your message",
+    termsAccepted: "I acknowledge and accept the Terms of Use",
+    newsletterSubscribed: "I want to subscribe for a newsletter",
+    submitButton: "REQUEST CALLBACK",
+    successMessage: "Appointment request sent successfully!",
+    failureMessage: "Failed to send email",
+    unknownError: "An unknown error occurred",
+
+  });
 
   useEffect(() => {
     const fetchTranslations = async () => {
@@ -134,7 +150,13 @@ const AppointmentForm = () => {
     }
   };
 
-  if (!translations) return <Loader/>;
+   if (!translations) return (
+    <div className="flex items-center justify-center space-x-4 z-50 h-[50vh]">
+    <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-0"></div>
+    <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-1"></div>
+    <div className="w-5 h-5 bg-[#b2b1b1] rounded-full bounce-delay-2"></div>
+  </div>
+   );
 
   return (
     <div className='py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-8 md:px-16 lg:px-24 bg-bgtop'>

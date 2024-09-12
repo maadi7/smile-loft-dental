@@ -9,6 +9,7 @@ import patient from "../../assets/portrait-beautiful-patient.png";
 import { fadeIn } from '../../utils/motion';
 import { blurHashToDataURL } from '@/utils/blurhash';
 import useTranslation from '../../hooks/useTranslation';
+import Link from 'next/link';
 
 const InfoSection = () => {
   const { translate, language } = useTranslation();
@@ -84,9 +85,11 @@ const InfoSection = () => {
             <p className='text-xl sm:text-2xl font-nunito text-primary leading-8 2xl:mb-16 sm:mb-10 mb-5'>
               {translatedText.description}
             </p>
+            <Link href={"/about-us"} >
             <button className='mb-2 sm:px-8 px-6 py-3 sm:text-xl text-sm font-nunito  transition-all duration-300 text-[#F7F6F3] bg-primary rounded-lg shadow-xl  hover:bg-box2 hover:text-primary'>
               {translatedText.button}
             </button>
+            </Link>
           </div>
         </motion.div>
         <motion.div
@@ -100,7 +103,7 @@ const InfoSection = () => {
           <Image src={BrandCircle} alt="smile-loft" layout="fill" objectFit="contain" />
         </motion.div>
         <motion.div
-          className="2xl:absolute relative mt-10 custom-md:-mt-3 2xl:mt-0 self-end lg:h-[524px] lg:w-[820px] sm:w-[600px] sm:h-[400px] w-[96%] h-[400px] object-contain 2xl:right-0 2xl:bottom-40"
+          className="2xl:absolute relative mt-10 custom-md:-mt-3 2xl:mt-0 self-end lg:h-[540px] lg:w-[860px] sm:w-[600px] sm:h-[400px] w-[96%] h-[400px] object-contain 2xl:right-0 2xl:bottom-32"
           variants={fadeIn("left", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
