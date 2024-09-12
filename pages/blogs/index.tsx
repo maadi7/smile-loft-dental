@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { graphQLClient } from "@/lib/graphqlClient";
 import { gql } from 'graphql-request';
 import { calculateReadingTime } from '@/utils/helper';
+import Link from 'next/link';
 
 interface Blog {
   title: string;
@@ -47,6 +48,7 @@ const BlogPage = () => {
                   url
                 }
                 featuredBlog
+                slug
               }
             }
           `
@@ -54,8 +56,9 @@ const BlogPage = () => {
 
         if (response && response.ourBlogs) {
           const featured = response.ourBlogs.find(blog => blog.featuredBlog);
+          console.log(featured?.slug);
           setFeaturedBlog(featured || null);
-          const remainigBlogs = response.ourBlogs.filter(blog => !blog.featuredBlog)
+          const remainigBlogs = response.ourBlogs.filter(blog => blog.featuredBlog)
           setBlogs(remainigBlogs)
         }
       } catch (error) {
@@ -84,33 +87,12 @@ const BlogPage = () => {
     return <div className="text-center mt-10">No featured blog found.</div>;
   }
 
-  const otherBlogs = [
-    {
-      title: "Blog Post 1",
-      description: "This is a brief description of Blog Post 1.",
-      image: "blog-post-1-image-url.jpg",
-      date: "August 20, 2024",
-    },
-    {
-      title: "Blog Post 2",
-      description: "This is a brief description of Blog Post 2.",
-      image: "blog-post-2-image-url.jpg",
-      date: "August 19, 2024",
-    },
-    {
-      title: "Blog Post 3",
-      description: "This is a brief description of Blog Post 3.",
-      image: "blog-post-3-image-url.jpg",
-      date: "August 18, 2024",
-    },
-    {
-      title: "Blog Post 3",
-      description: "This is a brief description of Blog Post 3.",
-      image: "blog-post-3-image-url.jpg",
-      date: "August 18, 2024",
-    },
-    // Add more blog posts as needed
-  ];
+  const truncateText = (text: string, wordLimit: number) => {
+    const words = text.split(' ');
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(' ') + '...'
+      : text;
+  };
 
   return (
     <div className="mx-auto pt-24 pb-10 bg-bgtop">
@@ -142,19 +124,45 @@ const BlogPage = () => {
             </p>
           </div>
           <p className="md:text-2xl text-lg font-nunito lg:mb-10 mb-4">{featuredBlog.description}</p>
-          <button className='mb-2 sm:px-8 px-6 py-3 sm:text-xl text-sm font-nunito transition-all duration-300 text-[#F7F6F3] bg-primary rounded-lg shadow-xl hover:bg-box2 hover:text-primary'>
+          <Link href={`/blogs/${featuredBlog.slug}`} >
+          <button  className='mb-2 sm:px-8 px-6 py-3 sm:text-xl text-sm font-nunito transition-all duration-300 text-[#F7F6F3] bg-primary rounded-lg shadow-xl hover:bg-box2 hover:text-primary'>
             READ MORE
           </button>
+          </Link>
         </div>
       </div>
 
-       <div className="other-blogs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:px-20 px-6">
+       <div className="other-blogs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:px-20 px-4">
         {blogs.map((blog, index) => (
           <div key={index} className="blog-post p-4 rounded-lg ">
             <img src={blog.blogImage.url} alt={blog.title} className="rounded-lg mb-4 w-full h-48 object-cover" />
             <h3 className="text-2xl font-semibold mb-2 font-playfair">{blog.title}</h3>
+            <div className='flex items-start'>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5 mt-1 mr-1"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </span>
+            <p className='mb-2 font-nunito uppercase text-bg1 font-semibold text-lg'>
+              {calculateReadingTime(blog.blog.body.text)} minute reading
+            </p>
+          </div>
             {/* <p className="text-gray-600 mb-2 font-raleway">{blog.description}</p> */}
-            <p className="text-base font-nunito">{blog.description}</p>
+            <p className="text-base font-nunito">{truncateText(blog.description, 15)}</p>
+            <button className='mb-2 sm:px-4 px-3 py-3 sm:text-sm text-sm font-nunito transition-all duration-300 text-[#F7F6F3] bg-primary rounded-lg shadow-xl hover:bg-box2 hover:text-primary mt-2'>
+            READ MORE
+          </button>
           </div>
         ))}
       </div>

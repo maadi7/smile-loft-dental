@@ -30,8 +30,8 @@ const Team = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [teamSections, setTeamSections] = useState<TeamSection[]>([]);
     const [translatedTeamSections, setTranslatedTeamSections] = useState<TeamSection[]>([]);
-    const [translatedHeader, setTranslatedHeader] = useState<string>("Lorem ipsum dolor");
-    const [translatedParagraph, setTranslatedParagraph] = useState<string>("Lorem ipsum dolor sit amet consectetur. Nec scelerisque nulla non dolor urna sollicitudin phasellus vulputate. Sit felis sit elementum eget.");
+    const [translatedHeader, setTranslatedHeader] = useState<string>("Meet the Smile Loft Team");
+    const [translatedParagraph, setTranslatedParagraph] = useState<string>("At Smile Loft, we believe that every smile tells a story, and our team is dedicated to making sure yours shines its brightest. Each member of our team brings passion, expertise, and a personal touch to ensure your dental experience is comfortable, friendly, and—most importantly—fun!");
     const { translate, language } = useTranslation();
 
     const toggleSection = (section: string) => {
@@ -75,8 +75,8 @@ const Team = () => {
         const translateContent = async () => {
             if (language === 'en') {
                 setTranslatedTeamSections(teamSections);
-                setTranslatedHeader("Lorem ipsum dolor");
-                setTranslatedParagraph("Lorem ipsum dolor sit amet consectetur. Nec scelerisque nulla non dolor urna sollicitudin phasellus vulputate. Sit felis sit elementum eget.");
+                setTranslatedHeader("Meet the Smile Loft Team");
+                setTranslatedParagraph("At Smile Loft, we believe that every smile tells a story, and our team is dedicated to making sure yours shines its brightest. Each member of our team brings passion, expertise, and a personal touch to ensure your dental experience is comfortable, friendly, and—most importantly—fun!");
             } else {
                 const translatedSections = await Promise.all(
                     teamSections.map(async (section) => {
@@ -89,11 +89,11 @@ const Team = () => {
                 );
                 setTranslatedTeamSections(translatedSections);
 
-                const headerTranslation = await translate("Lorem ipsum dolor");
-                setTranslatedHeader(headerTranslation.text || "Lorem ipsum dolor");
+                const headerTranslation = await translate("Meet the Smile Loft Team");
+                setTranslatedHeader(headerTranslation.text || "Meet the Smile Loft Team");
 
-                const paragraphTranslation = await translate("Lorem ipsum dolor sit amet consectetur. Nec scelerisque nulla non dolor urna sollicitudin phasellus vulputate. Sit felis sit elementum eget.");
-                setTranslatedParagraph(paragraphTranslation.text || "Lorem ipsum dolor sit amet consectetur. Nec scelerisque nulla non dolor urna sollicitudin phasellus vulputate. Sit felis sit elementum eget.");
+                const paragraphTranslation = await translate("At Smile Loft, we believe that every smile tells a story, and our team is dedicated to making sure yours shines its brightest. Each member of our team brings passion, expertise, and a personal touch to ensure your dental experience is comfortable, friendly, and—most importantly—fun!");
+                setTranslatedParagraph(paragraphTranslation.text || "At Smile Loft, we believe that every smile tells a story, and our team is dedicated to making sure yours shines its brightest. Each member of our team brings passion, expertise, and a personal touch to ensure your dental experience is comfortable, friendly, and—most importantly—fun!");
             }
         };
 
@@ -133,7 +133,7 @@ const Team = () => {
                                     quality={100}  
                                 />
                                 <div>
-                                    <p className='mt-2 text-primary !pl-0 text-start text-xs sm:text-sm md:text-[20px] font-playfair !min-w-[150px]'>{member.name}</p>
+                                    <p className='mt-2 text-primary !pl-0 text-start text-xs sm:text-sm md:text-[20px] md:leading-6 font-playfair md:!min-w-[150px]'>{member.name}</p>
                                     <p className='text-[10px] sm:text-[12px] md:text-[14px] text-start text-toptext font-playfair mt-1'>{member.designation}</p>
                                 </div>
                             </li>
