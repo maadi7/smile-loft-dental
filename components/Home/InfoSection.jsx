@@ -3,14 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import dentist from "../../assets/dentist.png";
+import dentist from "../../assets/1.jpg";
 import BrandCircle from "../../assets/SmileLoftDental.png";
-import patient from "../../assets/portrait-beautiful-patient.png";
+import patient from "../../assets/2.jpg";
 import { fadeIn } from '../../utils/motion';
 import { blurHashToDataURL } from '@/utils/blurhash';
 import useTranslation from '../../hooks/useTranslation';
 import Link from 'next/link';
-
 const InfoSection = () => {
   const { translate, language } = useTranslation();
   const [translatedText, setTranslatedText] = useState({
@@ -79,7 +78,7 @@ const InfoSection = () => {
             placeholder='blur'
             blurDataURL={blurHashToDataURL("LFN0_0Dhtl.9-:M{og_ND%M_I9j^")}
             objectFit='cover'
-            className='2xl:w-[927px] custom-md:w-[700px] w-[90%]  2xl:h-[620px] custom-md:h-[400px] h-[300px]'
+            className='2xl:w-[927px] custom-md:w-[700px] w-[90%]  2xl:h-[620px] custom-md:h-[400px] h-[250px]'
           />
           <div className='flex flex-col items-start justify-between 2x:ml-24 mt-5 lg:mt-0 md:ml-10 pl-2 lg:py-12 py-4 max-w-[550px] pr-4'>
             <p className='text-xl sm:text-2xl font-nunito text-primary leading-8 2xl:mb-16 sm:mb-10 mb-5'>

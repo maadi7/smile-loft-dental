@@ -46,7 +46,7 @@ const AppointmentForm = () => {
     location: "Location",
     messagePlaceholder: "Your message",
     termsAccepted: "I acknowledge and accept the Terms of Use",
-    newsletterSubscribed: "I want to subscribe for a newsletter",
+    newsletterSubscribed: "I want to subscribe to the newsletter",
     submitButton: "REQUEST CALLBACK",
     successMessage: "Appointment request sent successfully!",
     failureMessage: "Failed to send email",
@@ -66,7 +66,7 @@ const AppointmentForm = () => {
         location: (await translate("Location"))?.text || "Location",
         messagePlaceholder: (await translate("Your message"))?.text || "Your message",
         termsAccepted: (await translate("I acknowledge and accept the Terms of Use"))?.text || "I acknowledge and accept the Terms of Use",
-        newsletterSubscribed: (await translate("I want to subscribe for a newsletter"))?.text || "I want to subscribe for a newsletter",
+        newsletterSubscribed: (await translate("I want to subscribe to the newsletter"))?.text || "I want to subscribe to the newsletter",
         submitButton: (await translate("REQUEST CALLBACK"))?.text || "REQUEST CALLBACK",
         successMessage: (await translate("Appointment request sent successfully!"))?.text || "Appointment request sent successfully!",
         failureMessage: (await translate("Failed to send email"))?.text || "Failed to send email",
@@ -200,24 +200,46 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="w-full sm:w-1/3 px-2 sm:px-3 mb-4 sm:mb-0">
-            <input
+          <select
               className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
-              type="text"
               name="patientType"
               value={formData.patientType}
               onChange={handleInputChange}
-              placeholder={translations.patientTypePlaceholder}
-            />
+            >
+              <option value="">{translations.patientTypePlaceholder}</option>
+              <option value="Existing Patient">Existing Patient</option>
+              <option value="New Patient">New Patient</option>
+              
+              
+            </select>
           </div>
           <div className="w-full sm:w-1/3 px-2 sm:px-3">
-            <input
+            {/* <input
               className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
               type="text"
               name="treatment"
               value={formData.treatment}
               onChange={handleInputChange}
               placeholder={translations.treatmentPlaceholder}
-            />
+            /> */}
+             <select
+              className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
+              name="treatment"
+              value={formData.treatment}
+              onChange={handleInputChange}
+            >
+              <option value="">{translations.treatmentPlaceholder}</option>
+              <option value="Invisalign">Invisalign</option>
+              <option value="Dental Hygiene">Dental Hygiene</option>
+              <option value="Dental Fillings">Dental Fillings</option>
+              <option value="Dental Crowns">Dental Crowns</option>
+              <option value="Dental Implants">Dental Implants</option>
+              <option value="Teeth Whitening">Teeth Whitening</option>
+              <option value="Aura Aesthetics - Botox">Aura Aesthetics - Botox</option>
+              <option value="Emergency Exams">Emergency Exams</option>
+              <option value="Oral Surgery">Oral Surgery</option>
+              
+            </select>
           </div>
         </div>
 
@@ -243,9 +265,15 @@ const AppointmentForm = () => {
               onChange={handleInputChange}
             >
               <option value="">{translations.location}</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
+              <option value="Smile Loft Affinity Dental">Smile Loft Affinity Dental</option>
+              <option value="Smile Loft Glen Burnie">Smile Loft Glen Burnie</option>
+              <option value="Smile Loft Landover">Smile Loft Landover</option>
+              <option value="Smile Loft Laurel">Smile Loft Laurel</option>
+              <option value="Smile Loft North Potomac">Smile Loft North Potomac</option>
+              <option value="Smile Loft Shady Grove">Smile Loft Shady Grove</option>
+              <option value="Smile Loft Middle River">Smile Loft Middle River</option>
+              <option value="Smile Loft Towne Centre">Smile Loft Towne Centre</option>
+              
             </select>
           </div>
         </div>
