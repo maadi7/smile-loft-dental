@@ -97,7 +97,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className='md:py-20 md:px-24 px-4 py-16 bg-primary flex flex-col lg:flex-row justify-between text-white'>
+      <div className='md:py-20 xl:px-24 px-4 py-16 bg-primary flex flex-col lg:flex-row justify-between text-white'>
         <div>
           <Image src={FooterLogo} alt='footer-logo' className='w-[280px] h-[96px]' />
         </div>
