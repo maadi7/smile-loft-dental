@@ -62,7 +62,7 @@ const [isEnd, setIsEnd] = useState(false);
                                   url
                             }
                             blurHash
-                           
+                            googleProfileLink                   
                         }
                     }
                 `
@@ -256,16 +256,17 @@ const [isEnd, setIsEnd] = useState(false);
           >
             <Link
           key={index}
-          href={`https://www.google.com/maps?q=${image.location.latitude},${image?.location.longitude}`}
+          href={image.googleProfileLink}
           passHref
           target='_blank'
           >
-            <div className="overflow-hidden rounded-lg">
-              <Image src={image.locationImage.url}  alt={image.alt} className="w-[460px] h-[460px] object-cover mr-10" width={460} height={460} quality={100} />
+            <div className="overflow-hidden rounded-lg cursor-pointer">
+              
+              <Image src={image.locationImage.url}  alt={image.alt} className="w-[460px] h-[460px] object-cover mr-10 cursor-pointer" width={460} height={460} quality={100} />
             </div>
-            </Link>
             <h2 className="text-3xl font-playfair text-primary my-4">{image.locationName}</h2>
             <p className="max-w-[400px] font-nunito text-xl text-toptext font-semibold">{image.address}</p>
+            </Link>
           </motion.div>
         ))}
       </Slider>
