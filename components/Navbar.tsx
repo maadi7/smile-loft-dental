@@ -21,6 +21,7 @@ const Navbar = () => {
     { name: "Our Team", href: "/meet-the-team" },
     { name: "Contact Us", href: "/contact-us" },
     { name: "Blogs", href: "/blogs" },
+    { name: "Book Appointment", href: "/appointmentform" },
   ]);
 
   useEffect(() => {
@@ -109,14 +110,14 @@ const Navbar = () => {
           </button>
         </div>
         <div
-          className={`bg-[#848484] bg-opacity-100 backdrop-filter backdrop-blur-lg top-0 right-0 fixed w-[70%] md:w-1/3 h-screen z-30 flex flex-col items-start justify-start pt-20 transition-transform duration-300 transform rounded-l-lg ${
+          className={`bg-[#848484] bg-opacity-100 backdrop-filter backdrop-blur-lg top-0 right-0 fixed w-[75%] md:w-1/3 h-screen z-30 flex flex-col items-start justify-start pt-20 transition-transform duration-300 transform rounded-l-lg ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <CloseIcon style={{ fontSize: 40, color: '#fff' }} className="self-end mr-4 mt-4 absolute top-4 right-3 cursor-pointer" onClick={toggleMenu} />
   
           <motion.ul
-            className="justify-center flex pt-5 mx-10 gap-y-8 items-start text-[#fff] flex-col font-rubik font-medium"
+            className="justify-center flex pt-5 md:mx-10 mx-5 gap-y-8 items-start text-[#fff] flex-col font-medium"
             variants={staggerMenuItems}
             initial="closed"
             animate={isMenuOpen ? "open" : "closed"}

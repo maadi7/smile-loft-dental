@@ -112,32 +112,36 @@ const Ourservices: React.FC = () => {
         ) : (
           <div className='flex flex-col' >
             <h2 className='text-center pt-10 md:text-7xl text-5xl font-playfair text-primary'>Our Services</h2>
-            <div className="flex h-full w-full items-center justify-center md:py-16 py-8 px-4 lg:px-20 !overflow-hidden">
+            <div className="flex h-full w-full items-center justify-center md:py-16 py-8 px-0 lg:px-20 !overflow-hidden">
               <div className="grid h-full w-full gap-8 p-2 grid-cols-1 sm:grid-cols-2 custom-md:grid-cols-3 custom-lg:grid-cols-3 grid-rows-12 sm:grid-rows-8 custom-lg:grid-rows-10 custom-md:grid-rows-6">
                 {translatedServices && translatedServices.map((service, index) => (
                 <Link
-                key={service.slug}
-                href={`our-services/${service.slug}`}
-                className="col-span-1 row-span-10 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:scale-105 transition-all relative group"
-                style={{ backgroundColor: colors[index % colors.length] }}
-              >
-                {/* Text - visible on mobile, hidden on hover for larger screens */}
-                <h2 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary z-10 transition-opacity duration-300 sm:group-hover:opacity-0'>
-                  {service.name}
-                </h2>
-                
-                
-                <div
-                  className="absolute inset-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center hidden sm:block"
-                  style={{ backgroundImage: `url(${service.serviceImage.url})` }}
-                ></div>
-                
-              
-                <div
-                  className="absolute inset-0 rounded-lg bg-cover bg-center opacity-50 sm:hidden"
-                  style={{ backgroundImage: `url(${service.serviceImage.url})` }}
-                ></div>
-              </Link>
+                  key={service.slug}
+                  href={`our-services/${service.slug}`}
+                  className="col-span-1 row-span-10 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:scale-105 transition-all relative group"
+                  style={{ backgroundColor: colors[index % colors.length] }}
+                >
+                  {/* Text - visible on larger screens, hidden on hover */}
+                  <h2 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary z-10 transition-opacity duration-300 sm:group-hover:opacity-0 hidden sm:block'>
+                    {service.name}
+                  </h2>
+                  
+                  {/* Image - visible on hover for larger screens */}
+                  <div
+                    className="absolute inset-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center hidden sm:block"
+                    style={{ backgroundImage: `url(${service.serviceImage.url})` }}
+                  ></div>
+                  
+                  {/* Mobile layout */}
+                  <div className="sm:hidden w-full h-full absolute inset-0 rounded-lg bg-cover bg-center"
+                       style={{ backgroundImage: `url(${service.serviceImage.url})` }}>
+                    <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-70 p-4 rounded-t-lg">
+                      <h2 className='text-3xl sm:text-xl font-playfair text-white'>
+                        {service.name}
+                      </h2>
+                    </div>
+                  </div>
+                </Link>
                 ))}
               </div>
             </div>

@@ -151,9 +151,6 @@ const Services = () => {
             </button>
           </Link>
         </motion.div>
-
-                
-
         
         <motion.div
           className="col-span-1 row-span-2 bg-box1 p-4 rounded-lg text-center flex flex-col items-center justify-center cursor-pointer"
@@ -164,7 +161,6 @@ const Services = () => {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
           onClick={()=>handleClick("invisalign")}
-          
           >
         
             <h3 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary'>{translatedTexts.invisalign.title}</h3>

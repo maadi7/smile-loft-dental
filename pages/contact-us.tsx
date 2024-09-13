@@ -151,7 +151,7 @@ const Ourservices: React.FC = () => {
                   {/* Mobile layout */}
                   <div className="sm:hidden w-full h-full absolute inset-0 rounded-lg bg-cover bg-center"
                        style={{ backgroundImage: `url(${service.locationImage.url})` }}>
-                    <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-80 p-4">
+                    <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-80 p-4  rounded-t-lg">
                       <h2 className='text-3xl sm:text-3xl font-playfair text-white'>
                         {service.locationName}
                       </h2>
