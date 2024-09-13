@@ -49,6 +49,7 @@ const BlogPage = () => {
                 }
                 featuredBlog
                 slug
+                
               }
             }
           `

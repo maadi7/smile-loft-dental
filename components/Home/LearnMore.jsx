@@ -140,7 +140,7 @@ const LearnMore = () => {
           viewport={{ once: true }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
-          // onClick={() => router.push('/contact-us')}
+          onClick={() => router.push('/contact-us')}
         >
           <h3 className='text-4xl font-playfair mb-4 text-primary'>{translatedText.contactUs}</h3>
         </motion.div>
