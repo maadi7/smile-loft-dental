@@ -43,7 +43,7 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ blog }) => {
             />
 
           </div>
-          <div className="prose prose-teal leading-8 pb-8 font-nunito mt-10 text-primary">
+          <div className="prose prose-teal  pb-8 font-nunito mt-10 text-3xl text-primary text-[18px] sm:text-[24px]  font-semibold">
               <RichText content={blog?.body?.raw?.children} />
             </div>
       

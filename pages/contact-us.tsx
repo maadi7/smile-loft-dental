@@ -17,6 +17,7 @@ interface Location {
     url: string
   }
   locationName: string;
+  googleProfileLink: string
 }
 
 interface LocationResponse {
@@ -47,6 +48,7 @@ const Ourservices: React.FC = () => {
                                   url
                             }
                             blurHash
+                            googleProfileLink
                            
             }
             }
@@ -81,8 +83,6 @@ const Ourservices: React.FC = () => {
     translateHeading();
   }, [translate, language])
 
-
-
   const colors = ["#E7E4DA", "#CFC9B5"];
   const baseUrl = 'https://smileloftdental.com';
   const pageUrl = `${baseUrl}/contact-us`;
@@ -90,33 +90,32 @@ const Ourservices: React.FC = () => {
   return (
     <>
      <Head>
-  <title>Contact Us | Smile Loft Dental</title>
-  <meta
-    name="description"
-    content="Get in touch with Smile Loft Dental for all your dental care needs. Find our locations, contact information, and hours of operation."
-  />
-  <link rel="canonical" href={pageUrl} />
+        <title>Contact Us | Smile Loft Dental</title>
+        <meta
+          name="description"
+          content="Get in touch with Smile Loft Dental for all your dental care needs. Find our locations, contact information, and hours of operation."
+        />
+        <link rel="canonical" href={pageUrl} />
 
-  {/* OG Tags */}
-  <meta property="og:title" content="Contact Us | Smile Loft Dental" />
-  <meta 
-    property="og:description" 
-    content="Get in touch with Smile Loft Dental for all your dental care needs. Find our locations, contact information, and hours of operation."
-  />
-  <meta property="og:image" content="/assets/dentist.png" />
-  <meta property="og:url" content={pageUrl} />
-  <meta property="og:type" content="website" />
+        {/* OG Tags */}
+        <meta property="og:title" content="Contact Us | Smile Loft Dental" />
+        <meta 
+          property="og:description" 
+          content="Get in touch with Smile Loft Dental for all your dental care needs. Find our locations, contact information, and hours of operation."
+        />
+        <meta property="og:image" content="/assets/dentist.png" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:type" content="website" />
 
-  {/* Twitter Tags */}
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Contact Us | Smile Loft Dental" />
-  <meta 
-    name="twitter:description" 
-    content="Get in touch with Smile Loft Dental for all your dental care needs. Find our locations, contact information, and hours of operation."
-  />
-  <meta name="twitter:image" content="/assets/dentist.png" />
-</Head>
-
+        {/* Twitter Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact Us | Smile Loft Dental" />
+        <meta 
+          name="twitter:description" 
+          content="Get in touch with Smile Loft Dental for all your dental care needs. Find our locations, contact information, and hours of operation."
+        />
+        <meta name="twitter:image" content="/assets/dentist.png" />
+      </Head>
 
       <div className='bg-bgtop pt-20 pb-10 flex justify-center items-center'>
         {loading ? (
@@ -128,33 +127,37 @@ const Ourservices: React.FC = () => {
         ) : (
           <div className='flex flex-col' >
             <h2 className='text-center pt-10 md:text-7xl text-5xl font-playfair text-primary'>{locationHeading}</h2>
-            <div className="flex h-full w-full items-center justify-center md:py-16 py-8 px-4 lg:px-20 !overflow-hidden">
+            <div className="flex h-full w-full items-center justify-center md:py-16 py-8 px-2 sm:px-4 lg:px-20 !overflow-hidden">
               <div className="grid h-full w-full gap-8 p-2 grid-cols-1 sm:grid-cols-2 custom-md:grid-cols-2 custom-lg:grid-cols-2 grid-rows-12 sm:grid-rows-8 custom-lg:grid-rows-10 custom-md:grid-rows-6">
                 {services && services.map((service, index) => (
                 <Link
-                key={service.address}
-                target="_blank"
-                href={`https://www.google.com/maps?q=${service.location.latitude},${service.location.longitude}`}
-                className="col-span-1 row-span-10 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:scale-105 transition-all relative group"
-                style={{ backgroundColor: colors[index % colors.length] }}
-              >
-                {/* Text - visible on mobile, hidden on hover for larger screens */}
-                <h2 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary z-10 transition-opacity duration-300 sm:group-hover:opacity-0'>
-                  {service.locationName}
-                </h2>
-                
-                
-                <div
-                  className="absolute inset-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center hidden sm:block"
-                  style={{ backgroundImage: `url(${service.locationImage.url})` }}
-                ></div>
-                
-              
-                <div
-                  className="absolute inset-0 rounded-lg bg-cover bg-center opacity-50 sm:hidden"
-                  style={{ backgroundImage: `url(${service.locationImage.url})` }}
-                ></div>
-              </Link>
+                  key={service.address}
+                  target="_blank"
+                  href={service.googleProfileLink}
+                  className="col-span-1 row-span-10 p-4 rounded-lg text-center flex flex-col items-center justify-center hover:scale-105 transition-all relative group"
+                  style={{ backgroundColor: colors[index % colors.length] }}
+                >
+                  {/* Text - visible on larger screens, hidden on mobile */}
+                  <h2 className='text-3xl lg:text-4xl font-playfair mb-4 text-primary z-10 transition-opacity duration-300 sm:group-hover:opacity-0 hidden sm:block'>
+                    {service.locationName}
+                  </h2>
+                  
+                  {/* Image - visible on hover for larger screens */}
+                  <div
+                    className="absolute inset-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center hidden sm:block"
+                    style={{ backgroundImage: `url(${service.locationImage.url})` }}
+                  ></div>
+                  
+                  {/* Mobile layout */}
+                  <div className="sm:hidden w-full h-full absolute inset-0 rounded-lg bg-cover bg-center"
+                       style={{ backgroundImage: `url(${service.locationImage.url})` }}>
+                    <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-80 p-4">
+                      <h2 className='text-3xl sm:text-3xl font-playfair text-white'>
+                        {service.locationName}
+                      </h2>
+                    </div>
+                  </div>
+                </Link>
                 ))}
               </div>
             </div>

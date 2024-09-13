@@ -8,6 +8,7 @@ import { fadeIn } from '../../utils/motion';
 import { blurHashToDataURL } from '@/utils/blurhash';
 import useTranslation from '../../hooks/useTranslation';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const LearnMore = () => {
   const { translate, language } = useTranslation();
@@ -155,9 +156,11 @@ const LearnMore = () => {
         >
           <div className="text-center">
             <h2 className='text-bgtop font-playfair sm:text-4xl text-3xl mb-5'>{translatedText.claimOffer}</h2>
+            <Link href={`/appointmentform`} >
             <button className='px-8 py-3 transition-all duration-300 text-xl font-nunito text-toptext bg-bgtop rounded-lg shadow-xl hover:bg-box2 hover:text-primary'>
               {translatedText.getOffer}
             </button>
+            </Link>
           </div>
         </motion.div>
       </div>

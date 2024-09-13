@@ -3,6 +3,8 @@ import { graphQLClient } from "@/lib/graphqlClient";
 import { gql } from 'graphql-request';
 import { calculateReadingTime } from '@/utils/helper';
 import Link from 'next/link';
+import Image from 'next/image';
+import { blurHashToDataURL } from '@/utils/blurhash';
 
 interface Blog {
   title: string;
@@ -18,6 +20,7 @@ interface Blog {
   };
   slug: string;
   featuredBlog: boolean;
+  blurHash: string;
 }
 
 interface Blogs {
@@ -49,7 +52,7 @@ const BlogPage = () => {
                 }
                 featuredBlog
                 slug
-                
+                blurHash
               }
             }
           `
@@ -96,10 +99,21 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="mx-auto pt-24 pb-10 bg-bgtop">
-      <div className="featured-blog flex flex-col items-center lg:flex-row bg-box1 md:py-24 xl:px-24 px-4 py-8 w-full min-h-[40vh] mb-8">
+    <div className="mx-auto pt-24  bg-bgtop">
+      <Link href={`blogs/${featuredBlog.slug}`} >
+      <div className="featured-blog flex flex-col items-center lg:flex-row bg-box1 md:py-24 xl:px-24 px-4 py-8 w-full  mb-8">
         <div className="featured-image lg:w-1/2 h-[500px] flex-1">
-          <img src={featuredBlog.blogImage.url} alt={featuredBlog.title} className="rounded-lg object-cover w-full h-full" />
+        
+          <Image 
+          src={featuredBlog.blogImage.url} 
+          alt={featuredBlog.title} 
+          className="rounded-lg object-cover w-full h-full" 
+          placeholder='blur'
+          blurDataURL={blurHashToDataURL(featuredBlog.blurHash)}
+          width={600}
+          height={500}
+          quality={90}
+          />
         </div>
         <div className="featured-content lg:w-1/2 lg:pl-10 pl-0 mt-4 lg:mt-0">
           <h2 className="md:text-5xl text-3xl font-bold mb-2 font-playfair uppercase">{featuredBlog.title}</h2>
@@ -132,11 +146,24 @@ const BlogPage = () => {
           </Link>
         </div>
       </div>
+        </Link>
+      
 
        <div className="other-blogs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:px-20 px-4">
         {blogs.map((blog, index) => (
-          <div key={index} className="blog-post p-4 rounded-lg ">
-            <img src={blog.blogImage.url} alt={blog.title} className="rounded-lg mb-4 w-full h-48 object-cover" />
+          <Link href={`/blogs/${blog.slug}`} key={index} className="blog-post p-4 rounded-lg" >
+        
+        
+            <Image
+             src={blog.blogImage.url} 
+             alt={blog.title} 
+             className="rounded-lg mb-4 w-full h-48 object-cover" 
+             placeholder='blur'
+             blurDataURL={blurHashToDataURL(blog.blurHash)}
+             width={400}
+             height={300}
+             quality={90}
+             />
             <h3 className="text-2xl font-semibold mb-2 font-playfair">{blog.title}</h3>
             <div className='flex items-start'>
             <span>
@@ -164,7 +191,8 @@ const BlogPage = () => {
             <button className='mb-2 sm:px-4 px-3 py-3 sm:text-sm text-sm font-nunito transition-all duration-300 text-[#F7F6F3] bg-primary rounded-lg shadow-xl hover:bg-box2 hover:text-primary mt-2'>
             READ MORE
           </button>
-          </div>
+          
+          </Link>
         ))}
       </div>
     

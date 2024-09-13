@@ -1,12 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import FooterLogo from "../assets/Smile-Loft-logo1.png";
 import Instagram from "../assets/Instagram.svg";
 import Facebook from "../assets/facebook.svg";
 import LinkedIn from "../assets/linkedIn.svg";
 import Image from 'next/image';
 import useTranslation from '../hooks/useTranslation';
+
+const linkMap = {
+  "Home": "/",
+  "About us": "/about-us",
+  "Services": "/our-services",
+  "Contact us": "/contact-us",
+  "Blogs": "/blogs"
+};
 
 const FooterSection = ({ title, items, pointer }) => {
   const { translate, language } = useTranslation();
@@ -33,15 +42,23 @@ const FooterSection = ({ title, items, pointer }) => {
       <p className='text-xl font-raleway font-semibold'>{translatedTitle}</p>
       <div className='text-[18px] my-2 flex flex-col'>
         {translatedItems.map((item, index) => (
-          <p className={`mt-4 font-nunito ${pointer ? 'cursor-pointer' : ''}`} key={index}>
-            {item}
-          </p>
+          pointer ? (
+            <Link href={linkMap[item] || '/'} key={index}>
+              <p className='mt-4 font-nunito cursor-pointer'>
+                {item}
+              </p>
+            </Link>
+          ) : (
+            <p className='mt-4 font-nunito' key={index}>
+              {item}
+            </p>
+          )
         ))}
         { (translatedTitle === "Enlaces rápidos" || translatedTitle === "Quick Links") && (
           <div className='mt-6'>
             <p className='text-xl font-semibold font-raleway'>Connect With Us</p>
             <div className='flex items-center mt-4 space-x-3'>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white  rounded-full border hover:bg-box2'>
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white  rounded-full border hover:bg-box2'>
                 <Image src={Facebook} alt='Facebook' className='h-5 w-5' objectFit='contain' />
               </a>
 
@@ -70,7 +87,6 @@ const Footer = () => {
   const links = ["Home", "About us", "Services", "Blogs"];
 
   useEffect(() => {
-
     const translateText = async () => {
       const translatedLinks = await Promise.all(links.map(item => translate(item)));
       setTranslatedLinks(translatedLinks.map(item => item.text || item));

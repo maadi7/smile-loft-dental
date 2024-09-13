@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BannerVideo from "../../assets/bannerVideo.mp4";
 import useTranslation from '../../hooks/useTranslation';
+import Link from 'next/link';
 
 const Banner = () => {
   const { translate, language } = useTranslation();
@@ -49,9 +50,11 @@ const Banner = () => {
             <span>{translatedText.title}{language === "es"? " a" : ""}</span><br />
             <span>{"Smile Loft"}</span>
           </h1>
+          <Link href={`/appointmentform`} >
           <button className="mt-4 px-8 py-3 text-lg md:text-xl font-nunito text-white bg-white bg-opacity-20 backdrop-filter backdrop-blur-md rounded-full shadow-xl">
             {translatedText.button}
           </button>
+          </Link>
         </div>
       </div>
     </div>

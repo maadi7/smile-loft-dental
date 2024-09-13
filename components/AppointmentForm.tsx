@@ -288,7 +288,7 @@ const AppointmentForm = () => {
         <button
          type="submit"
          disabled={loading}
-         className='px-6 sm:px-8 py-2 sm:py-3 text-lg sm:text-xl font-nunito text-[#F7F6F3] bg-primary rounded-lg shadow-xl w-full sm:w-auto disabled:opacity-50'
+         className='px-6 sm:px-8 py-2 sm:py-3 text-lg sm:text-xl font-nunito text-[#F7F6F3] bg-primary rounded-lg shadow-xl w-full sm:w-auto disabled:opacity-50  hover:bg-box2 hover:text-primary transition-all duration-300'
         
         >
           {loading ? 'Loading...' : translations.submitButton}
