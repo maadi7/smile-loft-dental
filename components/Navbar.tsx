@@ -22,6 +22,7 @@ const Navbar = () => {
     { name: "Contact Us", href: "/contact-us" },
     { name: "Blogs", href: "/blogs" },
     { name: "Book Appointment", href: "/appointmentform" },
+    { name: "Careers", href: "/careers" },
   ]);
 
   useEffect(() => {
@@ -125,7 +126,7 @@ const Navbar = () => {
             {menuItems.map((item, index) => (
               <motion.li key={index} variants={menuItemVariants}>
                 <Link href={item.href}>
-                  <span onClick={toggleMenu} className="cursor-pointer text-[20px] md:text-[28px] hover:text-subtext hover:scale-125 transform transition-all duration-300 uppercase font-playfair font-bold">
+                  <span onClick={toggleMenu} className="cursor-pointer text-[20px] md:text-[24px] hover:text-subtext hover:scale-125 transform transition-all duration-300 uppercase font-playfair font-bold">
                     {item.name}
                   </span>
                 </Link>
