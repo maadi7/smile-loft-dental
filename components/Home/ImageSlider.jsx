@@ -20,6 +20,8 @@ const ImageSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isBeginning, setIsBeginning] = useState(true);
 const [isEnd, setIsEnd] = useState(false);
+
+
   const [translatedTexts, setTranslatedTexts] = useState([
     {
       id: 1,
@@ -197,21 +199,34 @@ const [isEnd, setIsEnd] = useState(false);
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
+          beforeChange: (oldIndex, newIndex) => {
+            setCurrentSlide(newIndex);
+            setIsBeginning(newIndex === 0);
+            setIsEnd(newIndex === locationsData.length - settings.slidesToShow);
+          },
         },
       },
       {
         breakpoint: 1150,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
+          beforeChange: (oldIndex, newIndex) => {
+            setCurrentSlide(newIndex);
+            setIsBeginning(newIndex === 0);
+            setIsEnd(newIndex === locationsData.length - settings.slidesToShow);
+          },
+          
         },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
+          beforeChange: (oldIndex, newIndex) => {
+            setCurrentSlide(newIndex);
+            setIsBeginning(newIndex === 0);
+            setIsEnd(newIndex === locationsData.length - 1);
+          },
         },
       },
     ],
