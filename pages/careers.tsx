@@ -13,6 +13,7 @@ interface BenefitsAndPerks {
 }
 
 interface JobListing {
+    jobDomain: string;
     jobTitle: string;
     jobLocation: string;
     profileResponsibilities: string;
@@ -31,7 +32,7 @@ const Careers = () => {
     const [allJobs, setAllJobs] = useState<JobListing[]>([]);
     const [translatedJobs, setTranslatedJobs] = useState<JobListing[]>([]);
     const [openSections, setOpenSections] = useState<Set<string>>(new Set());
-    const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
+    const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
     const [translatedHeader, setTranslatedHeader] = useState<string>("Join Our Team");
     const [translatedParagraph, setTranslatedParagraph] = useState<string>("Lorem ipsum dolor sit amet consectetur. Faucibus mi imperdiet malesuada in egestas. Feugiat id amet nibh pretium pulvinar auctor eget ullamcorper.");
     const { translate, language } = useTranslation();
@@ -43,6 +44,7 @@ const Careers = () => {
                     gql`
                         query MyQuery {
                             jobListings {
+                                jobDomain
                                 benefitsAndPerks
                                 jobTitle
                                 jobLocation
@@ -88,6 +90,7 @@ const Careers = () => {
                 const translatedJobListings = await Promise.all(
                     allJobs.map(async (job) => {
                         const translatedJob: JobListing = {
+                            jobDomain: await safeTranslate(job.jobDomain || ''),
                             jobTitle: await safeTranslate(job.jobTitle || ''),
                             jobLocation: await safeTranslate(job.jobLocation || ''),
                             profileResponsibilities: await safeTranslate(job.profileResponsibilities || ''),
@@ -129,16 +132,16 @@ const Careers = () => {
         });
     };
 
-    const handleJobSelection = (jobTitle: string) => {
-        setSelectedJobs(prevSelected => 
-            prevSelected.includes(jobTitle)
-                ? prevSelected.filter(job => job !== jobTitle)
-                : [...prevSelected, jobTitle]
+    const handleDomainSelection = (domain: string) => {
+        setSelectedDomains(prevSelected => 
+            prevSelected.includes(domain)
+                ? prevSelected.filter(d => d !== domain)
+                : [...prevSelected, domain]
         );
     };
 
     const handleViewAll = () => {
-        setSelectedJobs([]);
+        setSelectedDomains([]);
     };
 
     const renderBenefitsAndPerks = (benefitsAndPerks: BenefitsAndPerks) => {
@@ -173,12 +176,16 @@ const Careers = () => {
             </button>
             {openSections.has(job.jobTitle) && (
                 <div className="my-0 sm:my-10 p-2 sm:p-4 rounded-lg font-nunito font-semibold text-primary md:text-2xl text-lg md:space-y-14 space-y-7">
-                    <div className="mb-4 flex items-start text-toptext ">
+                    <div className="mb-4  text-toptext ">
+                        <div className='flex items-start' >
                         <Image src={LocationIcon} className='md:w-7 md:h-7 w-6 h-6 mr-1' alt='locpin'  />
                         <p className='' >
                         {job.jobLocation}
                         </p>
+                        </div>
+                      <p className='ml-2 md:text-lg text-sm' >{job.jobDomain}</p>
                     </div>
+                    
 
                     <h3 className='font-bold' >{job.remark}</h3>
 
@@ -216,29 +223,29 @@ const Careers = () => {
     );
 
     const renderJobSelection = () => (
-        <div className=" font-nunito font-semibold md:text-[22px] text-[16px] max-w-[1100px] capitalize">
+        <div className="font-nunito font-semibold md:text-[22px] text-[16px] max-w-[1100px] capitalize">
             <div className="flex flex-wrap md:gap-6 gap-4 mb-4">
                 <button
                     onClick={handleViewAll}
                     className={`px-4 py-1 rounded-lg transition-colors duration-300 border border-primary ${
-                        selectedJobs.length === 0
+                        selectedDomains.length === 0
                             ? 'bg-primary text-white'
                             : ''
                     }`}
                 >
                     View All
                 </button>
-                {translatedJobs.map((job) => (
+                {Array.from(new Set(translatedJobs.map(job => job.jobDomain))).map((domain) => (
                     <button
-                        key={job.jobTitle}
-                        onClick={() => handleJobSelection(job.jobTitle)}
-                        className={`px-4 py-1 rounded-lg transition-colors capitalize duration-300  border border-primary ${
-                            selectedJobs.includes(job.jobTitle)
+                        key={domain}
+                        onClick={() => handleDomainSelection(domain)}
+                        className={`px-4 py-1 rounded-lg transition-colors capitalize duration-300 border border-primary ${
+                            selectedDomains.includes(domain)
                                 ? 'bg-primary text-white'
                                 : ''
                         }`}
                     >
-                        {job.jobTitle}
+                        {domain}
                     </button>
                 ))}
             </div>
@@ -293,7 +300,9 @@ const Careers = () => {
                         </p>
                         {renderJobSelection()}
                         <div className='bg-bgtop pb-10 md:pt-20 sm:pt-10 pt-5 w-full'>
-                            {(selectedJobs.length === 0 ? translatedJobs : translatedJobs.filter(job => selectedJobs.includes(job.jobTitle)))
+                            {(selectedDomains.length === 0 
+                                ? translatedJobs 
+                                : translatedJobs.filter(job => selectedDomains.includes(job.jobDomain)))
                                 .map(job => renderSection(job))}
                         </div>
                     </div>

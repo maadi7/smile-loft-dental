@@ -7,7 +7,6 @@ import { motion } from 'framer-motion';
 import CloseIcon from '@mui/icons-material/Close';
 import SmileLoftLogo from '../assets/Smile-Loft-logo1.png';
 import HamburgerIcon from '../assets/hamburger.png';
-import { fadeIn } from '@/utils/motion';
 import useTranslation from '../hooks/useTranslation';
 
 const Navbar = () => {
