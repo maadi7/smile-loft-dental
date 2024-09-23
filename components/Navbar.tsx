@@ -14,13 +14,13 @@ const Navbar = () => {
   const { translate, toggleLanguage, language } = useTranslation();
   const [menuItems, setMenuItems] = useState([
     { name: "Home", href: "/" },
+    { name: "Book an Appointment", href: "/appointmentform" },
     { name: "About Us", href: "/about-us" },
     { name: "Our Services", href: "/our-services" },
     { name: "Our Dentists", href: "/our-dentists" },
     { name: "Our Team", href: "/meet-the-team" },
     { name: "Contact Us", href: "/contact-us" },
     { name: "Blogs", href: "/blogs" },
-    { name: "Book Appointment", href: "/appointmentform" },
     { name: "Careers", href: "/careers" },
   ]);
 
@@ -29,13 +29,13 @@ const Navbar = () => {
       if(language === "en"){
         setMenuItems([
           { name: "Home", href: "/" },
+          { name: "Book an Appointment", href: "/appointmentform" },
           { name: "About Us", href: "/about-us" },
           { name: "Our Services", href: "/our-services" },
           { name: "Our Dentists", href: "/our-dentists" },
           { name: "Our Team", href: "/meet-the-team" },
           { name: "Contact Us", href: "/contact-us" },
           { name: "Blogs", href: "/blogs" },
-          { name: "Book Appointment", href: "/appointmentform" },
           { name: "Careers", href: "/careers" },
         ])
         return;
@@ -124,11 +124,11 @@ const Navbar = () => {
           </button>
         </div>
         <div
-          className={`bg-[#848484] bg-opacity-100 backdrop-filter backdrop-blur-lg top-0 right-0 fixed w-[75%] md:w-1/3 h-screen z-30 flex flex-col items-start justify-start pt-20 transition-transform duration-300 transform rounded-l-lg ${
+          className={`bg-[#848484] bg-opacity-100 backdrop-filter backdrop-blur-lg top-0 right-0 fixed w-[75%] md:w-1/3 h-screen z-30 flex flex-col items-start justify-start pt-16 transition-transform duration-300 transform rounded-l-lg ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <CloseIcon style={{ fontSize: 40, color: '#fff' }} className="self-end mr-4 mt-4 absolute top-4 right-3 cursor-pointer" onClick={toggleMenu} />
+          <CloseIcon style={{ fontSize: 40, color: '#fff' }} className="self-end mr-4 mt-0 absolute top-4 right-3 cursor-pointer" onClick={toggleMenu} />
   
           <motion.ul
             className="justify-center flex pb-5 md:mx-10 mx-5 gap-y-8 items-start text-[#fff] flex-col font-medium"

@@ -49,7 +49,7 @@ function AppContent({ Component, pageProps, router }: AppProps) {
     content="Smile Loft Dental: Your trusted dental care provider offering comprehensive dental services with a focus on patient comfort with advanced technology."
   />
   <link rel="canonical" href="https://smileloftdental.com/" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/assets/fav.png" />
   {/* OG Tags */}
   <meta
     property="og:title"
