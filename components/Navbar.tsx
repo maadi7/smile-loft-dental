@@ -26,6 +26,20 @@ const Navbar = () => {
 
   useEffect(() => {
     const translateMenuItems = async () => {
+      if(language === "en"){
+        setMenuItems([
+          { name: "Home", href: "/" },
+          { name: "About Us", href: "/about-us" },
+          { name: "Our Services", href: "/our-services" },
+          { name: "Our Dentists", href: "/our-dentists" },
+          { name: "Our Team", href: "/meet-the-team" },
+          { name: "Contact Us", href: "/contact-us" },
+          { name: "Blogs", href: "/blogs" },
+          { name: "Book Appointment", href: "/appointmentform" },
+          { name: "Careers", href: "/careers" },
+        ])
+        return;
+      }
       const translatedItems = await Promise.all(
         menuItems.map(async (item) => {
           const translation = await translate(item.name);
@@ -72,7 +86,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='fixed top-0 left-0 w-full px-4 py-0 bg-[#000000] bg-opacity-40 backdrop-filter backdrop-blur-lg z-40'>
+    <div className='fixed top-0 left-0 w-full px-4  py-0 bg-[#000000] bg-opacity-40 backdrop-filter backdrop-blur-lg z-40'>
       <div className='flex justify-between items-center px-0 sm:px-16 py-6 xl:px-24 lg:px-12'>
         <div className='w-[160px] h-[60px]'>
           <Link href={"/"} >
@@ -117,7 +131,7 @@ const Navbar = () => {
           <CloseIcon style={{ fontSize: 40, color: '#fff' }} className="self-end mr-4 mt-4 absolute top-4 right-3 cursor-pointer" onClick={toggleMenu} />
   
           <motion.ul
-            className="justify-center flex pt-5 md:mx-10 mx-5 gap-y-8 items-start text-[#fff] flex-col font-medium"
+            className="justify-center flex pb-5 md:mx-10 mx-5 gap-y-8 items-start text-[#fff] flex-col font-medium"
             variants={staggerMenuItems}
             initial="closed"
             animate={isMenuOpen ? "open" : "closed"}

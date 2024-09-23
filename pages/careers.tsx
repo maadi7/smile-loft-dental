@@ -33,8 +33,8 @@ const Careers = () => {
     const [translatedJobs, setTranslatedJobs] = useState<JobListing[]>([]);
     const [openSections, setOpenSections] = useState<Set<string>>(new Set());
     const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
-    const [translatedHeader, setTranslatedHeader] = useState<string>("Join Our Team");
-    const [translatedParagraph, setTranslatedParagraph] = useState<string>("Lorem ipsum dolor sit amet consectetur. Faucibus mi imperdiet malesuada in egestas. Feugiat id amet nibh pretium pulvinar auctor eget ullamcorper.");
+    const [translatedHeader, setTranslatedHeader] = useState<string>("Join the Smile Loft Dental Family");
+    const [translatedParagraph, setTranslatedParagraph] = useState<string>("At Smile Loft Dental, we’re more than just a dental practice. We’re a team of dedicated professionals driven by a shared passion for patient care, innovation, and a positive work culture. Our mission is to create beautiful, healthy smiles while fostering an environment that’s supportive, inclusive, and fun. Whether you’re a dental professional, administrative expert, or someone starting your journey in healthcare, Smile Loft is the place to grow, learn, and make a meaningful impact.");
     const { translate, language } = useTranslation();
 
     useEffect(() => {
@@ -74,8 +74,8 @@ const Careers = () => {
         const translateContent = async () => {
             if (language === 'en') {
                 setTranslatedJobs(allJobs);
-                setTranslatedHeader("Join Our Team");
-                setTranslatedParagraph("Lorem ipsum dolor sit amet consectetur. Faucibus mi imperdiet malesuada in egestas. Feugiat id amet nibh pretium pulvinar auctor eget ullamcorper.");
+                setTranslatedHeader("Join the Smile Loft Dental Family");
+                setTranslatedParagraph("At Smile Loft Dental, we’re more than just a dental practice. We’re a team of dedicated professionals driven by a shared passion for patient care, innovation, and a positive work culture. Our mission is to create beautiful, healthy smiles while fostering an environment that’s supportive, inclusive, and fun. Whether you’re a dental professional, administrative expert, or someone starting your journey in healthcare, Smile Loft is the place to grow, learn, and make a meaningful impact.");
             } else {
                 const safeTranslate = async (text: string) => {
                     try {
@@ -112,8 +112,8 @@ const Careers = () => {
 
                 setTranslatedJobs(translatedJobListings);
 
-                setTranslatedHeader(await safeTranslate("Join Our Team"));
-                setTranslatedParagraph(await safeTranslate("Lorem ipsum dolor sit amet consectetur. Faucibus mi imperdiet malesuada in egestas. Feugiat id amet nibh pretium pulvinar auctor eget ullamcorper."));
+                setTranslatedHeader(await safeTranslate("Join the Smile Loft Dental Family"));
+                setTranslatedParagraph(await safeTranslate("At Smile Loft Dental, we’re more than just a dental practice. We’re a team of dedicated professionals driven by a shared passion for patient care, innovation, and a positive work culture. Our mission is to create beautiful, healthy smiles while fostering an environment that’s supportive, inclusive, and fun. Whether you’re a dental professional, administrative expert, or someone starting your journey in healthcare, Smile Loft is the place to grow, learn, and make a meaningful impact."));
             }
         };
 
@@ -163,14 +163,14 @@ const Careers = () => {
                 className="w-full flex justify-between items-center p-2 sm:p-4 rounded-lg border-none my-3 sm:my-5"
                 onClick={() => toggleSection(job.jobTitle)}
             >
-                <span className='font-playfair text-2xl text-start sm:text-4xl md:text-5xl lg:text-[56px] font-semibold text-primary uppercase'>
+                <span className='font-playfair text-2xl text-start sm:text-4xl md:text-5xl lg:text-[50px] font-semibold text-primary uppercase'>
                     {job.jobTitle}
                 </span>
                 <span className={`transition-transform duration-500 ${openSections.has(job.jobTitle) ? 'rotate-180' : ''}`}>
                     {openSections.has(job.jobTitle) ? (
-                        <Image src={minus} alt='open' className='w-[28px] sm:w-[40px] md:w-[48px] lg:w-[56px]' />
+                        <Image src={minus} alt='open' className='w-[28px] sm:w-[40px] md:w-[48px] lg:w-[50px]' />
                     ) : (
-                        <Image src={plus} alt='collapse' className='w-[28px] sm:w-[40px] md:w-[48px] lg:w-[56px]' />
+                        <Image src={plus} alt='collapse' className='w-[28px] sm:w-[40px] md:w-[48px] lg:w-[50px]' />
                     )}
                 </span>
             </button>
@@ -295,7 +295,7 @@ const Careers = () => {
                         <h2 className='text-3xl text-[40px] sm:text-[56px] lg:text-[56px] font-playfair md:leading-[50px] leading-[40px] font-semibold mb-5 md:mb-10 text-primary uppercase'>
                             {translatedHeader}
                         </h2>
-                        <p className='text-lg md:text-2xl leading-8 md:leading-10 font-nunito text-subtext max-w-[875px] mb-8'>
+                        <p className='text-lg md:text-2xl leading-8 md:leading-10 font-nunito text-subtext mb-8'>
                             {translatedParagraph}
                         </p>
                         {renderJobSelection()}
