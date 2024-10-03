@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import FooterLogo from "../assets/Smile-Loft-logo1.png";
+import Youtube from "../assets/youtube-svgrepo-com.svg"
 import Instagram from "../assets/Instagram.svg";
 import Facebook from "../assets/facebook.svg";
 import LinkedIn from "../assets/linkedIn.svg";
@@ -55,7 +56,7 @@ const FooterSection = ({ title, items, pointer, locationDetails }) => {
                rel="noopener noreferrer" 
                key={index} 
                className='mt-4 font-nunito cursor-pointer'>
-              {location.locationName}
+              {location.locationName.substring(11)}
             </a>
           ))
         : translatedItems.map((item, index) => (
@@ -81,8 +82,8 @@ const FooterSection = ({ title, items, pointer, locationDetails }) => {
               <a href="https://www.instagram.com/smileloftglenburnie/" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white rounded-full border hover:bg-box2'>
                 <Image src={Instagram} alt='Instagram' className='h-5 w-5' />
               </a>
-              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white rounded-full border hover:bg-box2'>
-                <Image src={LinkedIn} alt='LinkedIn' className='h-5 w-5' objectFit='contain' />
+              <a href="https://www.youtube.com/@smileloftdental" target="_blank" rel="noopener noreferrer" className='inline-block p-[6px] bg-white rounded-full border hover:bg-box2'>
+                <Image src={Youtube} alt='youtube' className='h-5 w-5' objectFit='contain' />
               </a>
             </div>
           </div>
@@ -150,19 +151,18 @@ const Footer = () => {
 
   return (
     <>
-      <div className='md:py-20 xl:px-24 px-4 py-16 bg-primary flex flex-col lg:flex-row justify-between text-white'>
-        <div>
+    <div className='md:py-20 xl:px-24 px-4 py-16 bg-primary text-white'>
+      <div className='grid grid-cols-1 md:grid-cols-5 md:gap-8 gap-0'>
+        <div className='col-span-2'>
           <Image src={FooterLogo} alt='footer-logo' className='w-[280px] h-[96px]' />
         </div>
-        <div className='flex flex-1 flex-col lg:flex-row justify-around md:ml-10 xl:mr-20'>
+        <div className='md:col-span-1 col-span-2'>
           <FooterSection 
             title="Our Locations" 
             locationDetails={locationDetails} 
           />
-          <FooterSection 
-            title="Meet All Doctors" 
-            items={doctors} 
-          />
+        </div>
+        <div className='md:col-span-1 col-span-2 md:ml-12 ml-0'>
           <FooterSection 
             title="Quick Links" 
             items={translatedLinks} 
@@ -170,10 +170,11 @@ const Footer = () => {
           />
         </div>
       </div>
-      <div className='md:py-4 md:px-24 px-12 py-4 bg-primary text-white'>
-        &copy; 2024 Smile Loft Dental LLC
-      </div>
-    </>
+    </div>
+    <div className='md:py-4 md:px-24 px-12 py-4 bg-primary text-white'>
+      &copy; 2024 Smile Loft Dental LLC
+    </div>
+  </>
   );
 };
 

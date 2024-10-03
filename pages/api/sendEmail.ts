@@ -19,23 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       email,
       patientType,
       treatment,
-      insurance,
       location,
       message,
     } = req.body;
 
     const mailOptions = {
       from: email,
-      to: 'mishraadi733@gmail.com', // Replace with your email
-      subject: 'New Appointment Request',
+      to: process.env.SMILE_LOFT_EMAIL, // Replace with your email
+      subject: 'Callback Request!!',
       html: `
-      <h1>New Appointment Request</h1>
+      <h1>You have a new callback requested! find the details below</h1>
       <p><strong>Name:</strong> ${fullName}</p>
       <p><strong>Phone:</strong> ${phoneNumber}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Patient Type:</strong> ${patientType}</p>
       <p><strong>Treatment:</strong> ${treatment}</p>
-      <p><strong>Insurance:</strong> ${insurance}</p>
       <p><strong>Location:</strong> ${location}</p>
       <p><strong>Message:</strong></p>
       <p>${message}</p>

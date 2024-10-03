@@ -5,12 +5,14 @@ import { Playfair_Display, Nunito, Raleway } from '@next/font/google';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import "../styles/global.css"
+import Script from "next/script";
 import { LoadingProvider } from '../context/LoadingContext';
 import Loader from '../components/Loader';
 import { useLoading } from '../context/LoadingContext';
 import dynamic from "next/dynamic";
 const Navbar = dynamic(()=>import("../components/Navbar"), {});
 const Footer = dynamic(()=>import("../components/Footer"), {});
+
 
 
 const playfairDisplay = Playfair_Display({
@@ -78,6 +80,18 @@ function AppContent({ Component, pageProps, router }: AppProps) {
       {isLoading && <Loader />}
       <Navbar />
       <Component {...pageProps} />
+      
+      
+<Script  strategy="lazyOnload"
+        id="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-QSE2N9E20V" />
+
+<Script  strategy="lazyOnload"
+          id="analytics2" >
+    {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)}
+  gtag('js', new Date());
+  gtag('config', 'G-QSE2N9E20V');`}
+</Script>
       
       <Footer />
       <style jsx global>{`

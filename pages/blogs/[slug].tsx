@@ -39,8 +39,8 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ blog }) => {
         }}
       />
 
-      <h1 className='md:text-5xl text-3xl font-bold font-playfair uppercase md:mb-10 mb-5 items-start'>{blog.title}</h1>
-      <div className="flex justify-between items-center md:w-[80%] w-full">
+      <h1 className='md:text-5xl text-3xl font-bold font-playfair uppercase md:mb-10 mb-5 max-w-5xl mx-auto'>{blog.title}</h1>
+      <div className="flex justify-between items-center lg:w-[70%] w-full">
       <div className='flex items-start'>
             <span>
               <svg

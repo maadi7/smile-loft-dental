@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { AppointmentInput } from '../types/graphql';
 import useTranslation from '../hooks/useTranslation';
 import Loader from './Loader';
+import toast, { Toaster } from "react-hot-toast";
+
 
 const AppointmentForm = () => {
   const { translate, language } = useTranslation();
@@ -22,6 +24,7 @@ const AppointmentForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [translations, setTranslations] = useState<{
+    heading: string;
     fullNamePlaceholder: string;
     phoneNumberPlaceholder: string;
     emailPlaceholder: string;
@@ -37,6 +40,7 @@ const AppointmentForm = () => {
     failureMessage: string;
     unknownError: string;
   } | null>({
+    heading: "REQUEST CALLBACK",
     fullNamePlaceholder: "Full Name",
     phoneNumberPlaceholder: "Phone Number",
     emailPlaceholder: "Email Id",
@@ -47,7 +51,7 @@ const AppointmentForm = () => {
     messagePlaceholder: "Your message",
     termsAccepted: "I acknowledge and accept the Terms of Use",
     newsletterSubscribed: "I want to subscribe to the newsletter",
-    submitButton: "REQUEST CALLBACK",
+    submitButton: "SUBMIT",
     successMessage: "Appointment request sent successfully!",
     failureMessage: "Failed to send email",
     unknownError: "An unknown error occurred",
@@ -57,6 +61,7 @@ const AppointmentForm = () => {
   useEffect(() => {
     const fetchTranslations = async () => {
       const translatedTexts = {
+        heading: (await translate("REQUEST CALLBACK"))?.text || "REQUEST CALLBACK",
         fullNamePlaceholder: (await translate("Full Name"))?.text || "Full Name",
         phoneNumberPlaceholder: (await translate("Phone Number"))?.text || "Phone Number",
         emailPlaceholder: (await translate("Email Id"))?.text || "Email Id",
@@ -67,7 +72,7 @@ const AppointmentForm = () => {
         messagePlaceholder: (await translate("Your message"))?.text || "Your message",
         termsAccepted: (await translate("I acknowledge and accept the Terms of Use"))?.text || "I acknowledge and accept the Terms of Use",
         newsletterSubscribed: (await translate("I want to subscribe to the newsletter"))?.text || "I want to subscribe to the newsletter",
-        submitButton: (await translate("REQUEST CALLBACK"))?.text || "REQUEST CALLBACK",
+        submitButton: (await translate("SUBMIT"))?.text || "SUBMIT",
         successMessage: (await translate("Appointment request sent successfully!"))?.text || "Appointment request sent successfully!",
         failureMessage: (await translate("Failed to send email"))?.text || "Failed to send email",
         unknownError: (await translate("An unknown error occurred"))?.text || "An unknown error occurred",
@@ -160,9 +165,10 @@ const AppointmentForm = () => {
 
   return (
     <div className='py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-8 md:px-16 lg:px-24 bg-bgtop'>
+       
       <form onSubmit={handleSubmit} className="w-full max-w-full bg-bgbottom p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg font-nunito">
         <h2 className='text-center text-2xl sm:text-3xl md:text-4xl uppercase font-playfair mb-6 sm:mb-8 lg:mb-10'>
-          {translations.submitButton}
+          {translations.heading}
         </h2>
         
         <div className="flex flex-wrap mb-4 sm:mb-6 -mx-2 sm:-mx-3">
@@ -200,51 +206,40 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="w-full sm:w-1/3 px-2 sm:px-3 mb-4 sm:mb-0">
-          <select
-              className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
-              name="patientType"
-              value={formData.patientType}
-              onChange={handleInputChange}
-            >
-              <option value="">{translations.patientTypePlaceholder}</option>
-              <option value="Existing Patient">Existing Patient</option>
-              <option value="New Patient">New Patient</option>
-              
-              
-            </select>
-          </div>
-          <div className="w-full sm:w-1/3 px-2 sm:px-3">
-            {/* <input
-              className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
-              type="text"
-              name="treatment"
-              value={formData.treatment}
-              onChange={handleInputChange}
-              placeholder={translations.treatmentPlaceholder}
-            /> */}
-             <select
-              className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
-              name="treatment"
-              value={formData.treatment}
-              onChange={handleInputChange}
-            >
-              <option value="">{translations.treatmentPlaceholder}</option>
-              <option value="Invisalign">Invisalign</option>
-              <option value="Dental Hygiene">Dental Hygiene</option>
-              <option value="Dental Fillings">Dental Fillings</option>
-              <option value="Dental Crowns">Dental Crowns</option>
-              <option value="Dental Implants">Dental Implants</option>
-              <option value="Teeth Whitening">Teeth Whitening</option>
-              <option value="Aura Aesthetics - Botox">Aura Aesthetics - Botox</option>
-              <option value="Emergency Exams">Emergency Exams</option>
-              <option value="Oral Surgery">Oral Surgery</option>
-              
-            </select>
-          </div>
+  <select
+    className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
+    name="patientType"
+    value={formData.patientType}
+    onChange={handleInputChange}
+  >
+    <option value="" disabled selected hidden>{translations.patientTypePlaceholder}</option>
+    <option value="Existing Patient">Existing Patient</option>
+    <option value="New Patient">New Patient</option>
+  </select>
+</div>
+<div className="w-full sm:w-1/3 px-2 sm:px-3">
+  <select
+    className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
+    name="treatment"
+    value={formData.treatment}
+    onChange={handleInputChange}
+  >
+    <option value="" disabled selected hidden>{translations.treatmentPlaceholder}</option>
+    <option value="Invisalign">Invisalign</option>
+    <option value="Dental Hygiene">Dental Hygiene</option>
+    <option value="Dental Fillings">Dental Fillings</option>
+    <option value="Dental Crowns">Dental Crowns</option>
+    <option value="Dental Implants">Dental Implants</option>
+    <option value="Teeth Whitening">Teeth Whitening</option>
+    <option value="Aura Aesthetics - Botox">Aura Aesthetics - Botox</option>
+    <option value="Emergency Exams">Emergency Exams</option>
+    <option value="Oral Surgery">Oral Surgery</option>
+  </select>
+</div>
         </div>
 
         <div className="flex flex-wrap mb-4 sm:mb-6 -mx-2 sm:-mx-3">
-          <div className="w-full sm:w-1/2 px-2 sm:px-3 mb-4 sm:mb-0">
+          {/* <div className="w-full sm:w-1/2 px-2 sm:px-3 mb-4 sm:mb-0">
             <select
               className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
               name="insurance"
@@ -256,26 +251,25 @@ const AppointmentForm = () => {
               <option value="Option 2">Option 2</option>
               <option value="Option 3">Option 3</option>
             </select>
-          </div>
-          <div className="w-full sm:w-1/2 px-2 sm:px-3">
-            <select
-              className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
-              name="location"
-              value={formData.location}
-              onChange={handleInputChange}
-            >
-              <option value="">{translations.location}</option>
-              <option value="Smile Loft Affinity Dental">Smile Loft Affinity Dental</option>
-              <option value="Smile Loft Glen Burnie">Smile Loft Glen Burnie</option>
-              <option value="Smile Loft Landover">Smile Loft Landover</option>
-              <option value="Smile Loft Laurel">Smile Loft Laurel</option>
-              <option value="Smile Loft North Potomac">Smile Loft North Potomac</option>
-              <option value="Smile Loft Shady Grove">Smile Loft Shady Grove</option>
-              <option value="Smile Loft Middle River">Smile Loft Middle River</option>
-              <option value="Smile Loft Towne Centre">Smile Loft Towne Centre</option>
-              
-            </select>
-          </div>
+          </div> */}
+          <div className="w-full px-2 sm:px-3">
+  <select
+    className="block w-full rounded-lg py-2 sm:py-3 px-3 sm:px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-primary"
+    name="location"
+    value={formData.location}
+    onChange={handleInputChange}
+  >
+    <option value="" disabled selected hidden>{translations.location}</option>
+    <option value="Smile Loft Affinity Dental">Smile Loft Affinity Dental</option>
+    <option value="Smile Loft Glen Burnie">Smile Loft Glen Burnie</option>
+    <option value="Smile Loft Landover">Smile Loft Landover</option>
+    <option value="Smile Loft Laurel">Smile Loft Laurel</option>
+    <option value="Smile Loft North Potomac">Smile Loft North Potomac</option>
+    <option value="Smile Loft Shady Grove">Smile Loft Shady Grove</option>
+    <option value="Smile Loft Middle River">Smile Loft Middle River</option>
+    <option value="Smile Loft Towne Centre">Smile Loft Towne Centre</option>
+  </select>
+</div>
         </div>
 
         <div className="flex flex-wrap mb-4 sm:mb-6 -mx-2 sm:-mx-3">
