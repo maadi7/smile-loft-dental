@@ -130,7 +130,13 @@ const Ourservices: React.FC = () => {
                   <div
                     className="absolute inset-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center hidden sm:block"
                     style={{ backgroundImage: `url(${service.serviceImage.url})` }}
-                  ></div>
+                  >
+                     <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-70 p-4 rounded-t-lg">
+                      <h2 className='text-3xl sm:text-xl font-playfair text-white'>
+                        {service.name}
+                      </h2>
+                    </div>
+                  </div>
                   
                   {/* Mobile layout */}
                   <div className="sm:hidden w-full h-full absolute inset-0 rounded-lg bg-cover bg-center"

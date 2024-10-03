@@ -74,7 +74,7 @@ const [isEnd, setIsEnd] = useState(false);
               setLocationsData(response.locationDetails);
 
            
-                console.log(response.locationDetails);
+                // console.log(response.locationDetails);
             }
         } catch (error) {
             console.error("GraphQL Error:", error);

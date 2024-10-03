@@ -60,9 +60,9 @@ const BlogPage = () => {
 
         if (response && response.ourBlogs) {
           const featured = response.ourBlogs.find(blog => blog.featuredBlog);
-          console.log(featured?.slug);
+          // console.log(featured?.slug);
           setFeaturedBlog(featured || null);
-          const remainigBlogs = response.ourBlogs.filter(blog => blog.featuredBlog)
+          const remainigBlogs = response.ourBlogs.filter(blog => !blog.featuredBlog)
           setBlogs(remainigBlogs)
         }
       } catch (error) {
@@ -101,7 +101,7 @@ const BlogPage = () => {
   return (
     <div className="mx-auto pt-24  bg-bgtop">
       <Link href={`blogs/${featuredBlog.slug}`} >
-      <div className="featured-blog flex flex-col items-center lg:flex-row bg-box1 md:py-24 xl:px-24 px-4 py-8 w-full  mb-8">
+      <div className="featured-blog flex flex-col items-center lg:flex-row bg-box1 md:py-24 xl:px-24 px-4 py-8 w-full  ">
         <div className="featured-image lg:w-1/2 h-[500px] flex-1">
         
           <Image 
@@ -135,7 +135,7 @@ const BlogPage = () => {
               </svg>
             </span>
             <p className='xsm:mb-10 mb-6 font-nunito uppercase text-bg1 font-semibold text-lg'>
-              {calculateReadingTime(featuredBlog.blog.body.text)} minute reading
+              {calculateReadingTime(featuredBlog.blog.body.text)} min
             </p>
           </div>
           <p className="md:text-2xl text-lg font-nunito lg:mb-10 mb-4">{featuredBlog.description}</p>
@@ -151,7 +151,7 @@ const BlogPage = () => {
 
        <div className="other-blogs grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:px-20 px-4">
         {blogs.map((blog, index) => (
-          <Link href={`/blogs/${blog.slug}`} key={index} className="blog-post p-4 rounded-lg" >
+          <Link href={`/blogs/${blog.slug}`} key={index} className="blog-post p-4 rounded-lg  md:mt-10 mt-5" >
         
         
             <Image
@@ -183,7 +183,7 @@ const BlogPage = () => {
               </svg>
             </span>
             <p className='mb-2 font-nunito uppercase text-bg1 font-semibold text-lg'>
-              {calculateReadingTime(blog.blog.body.text)} minute reading
+              {calculateReadingTime(blog.blog.body.text)} min
             </p>
           </div>
             {/* <p className="text-gray-600 mb-2 font-raleway">{blog.description}</p> */}

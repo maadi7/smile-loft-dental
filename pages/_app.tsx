@@ -32,7 +32,7 @@ function AppContent({ Component, pageProps, router }: AppProps) {
   const { isLoading } = useLoading();
 
   return (
-    <>
+    <div>
       <style jsx global>{`
         :root {
           --font-playfair: ${playfairDisplay.style.fontFamily};
@@ -78,11 +78,12 @@ function AppContent({ Component, pageProps, router }: AppProps) {
       {isLoading && <Loader />}
       <Navbar />
       <Component {...pageProps} />
+      
       <Footer />
       <style jsx global>{`
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400&display=swap');
       `}</style>
-    </>
+    </div>
   );
 }
 
@@ -90,6 +91,7 @@ function MyApp(appProps: AppProps) {
   return (
     <LoadingProvider>
       <AppContent {...appProps} />
+      
     </LoadingProvider>
   );
 }

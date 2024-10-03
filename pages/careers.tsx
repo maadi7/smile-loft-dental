@@ -13,7 +13,7 @@ interface BenefitsAndPerks {
 }
 
 interface JobListing {
-    jobDomain: string;
+    
     jobTitle: string;
     jobLocation: string;
     profileResponsibilities: string;
@@ -21,10 +21,13 @@ interface JobListing {
     benefitsAndPerks: BenefitsAndPerks;
     contact: string;
     remark: string;
+    jobDomain: {
+        jobDomainName: string;
+      }
 }
 
 interface AllJobs {
-    jobListings: JobListing[];
+    jobDetails: JobListing[];
 }
 
 const Careers = () => {
@@ -43,22 +46,27 @@ const Careers = () => {
                 const response = await graphQLClient.request<AllJobs>(
                     gql`
                         query MyQuery {
-                            jobListings {
-                                jobDomain
-                                benefitsAndPerks
-                                jobTitle
-                                jobLocation
-                                profileResponsibilities
-                                teamandCulture
-                                contact
-                                remark
-                            }
+                            jobDetails{
+    jobTitle
+    jobDomain{
+      jobDomainName
+    }
+    benefitsAndPerks
+    jobTitle
+    jobLocation
+    profileResponsibilities
+    teamandCulture
+    contact
+    remark
+  }
                         }
                     `
                 );
+                console.log(response);
 
-                if (response && response.jobListings) {
-                    setAllJobs(response.jobListings);
+                if (response && response.jobDetails) {
+                    // console.log(response.jobDetails);
+                    setAllJobs(response.jobDetails);
                 }
             } catch (error) {
                 console.error("GraphQL Error:", error);
@@ -90,7 +98,9 @@ const Careers = () => {
                 const translatedJobListings = await Promise.all(
                     allJobs.map(async (job) => {
                         const translatedJob: JobListing = {
-                            jobDomain: await safeTranslate(job.jobDomain || ''),
+                            jobDomain: {
+                              jobDomainName:  await safeTranslate(job.jobDomain.jobDomainName || ''),
+                            },  
                             jobTitle: await safeTranslate(job.jobTitle || ''),
                             jobLocation: await safeTranslate(job.jobLocation || ''),
                             profileResponsibilities: await safeTranslate(job.profileResponsibilities || ''),
@@ -99,6 +109,7 @@ const Careers = () => {
                             contact: await safeTranslate(job.contact || ''),
                             remark: await safeTranslate(job.remark || ''),
                         };
+                        
 
                         if (job.benefitsAndPerks) {
                             for (const [key, value] of Object.entries(job.benefitsAndPerks)) {
@@ -183,7 +194,7 @@ const Careers = () => {
                         {job.jobLocation}
                         </p>
                         </div>
-                      <p className='ml-2 md:text-lg text-sm' >{job.jobDomain}</p>
+                      <p className='ml-2 md:text-lg text-sm' >{job.jobDomain.jobDomainName}</p>
                     </div>
                     
 
@@ -235,9 +246,10 @@ const Careers = () => {
                 >
                     View All
                 </button>
-                {Array.from(new Set(translatedJobs.map(job => job.jobDomain))).map((domain) => (
+                
+                {Array.from((translatedJobs.map(job => job.jobDomain.jobDomainName))).map((domain, index) => (
                     <button
-                        key={domain}
+                        key={index}
                         onClick={() => handleDomainSelection(domain)}
                         className={`px-4 py-1 rounded-lg transition-colors capitalize duration-300 border border-primary ${
                             selectedDomains.includes(domain)
@@ -245,6 +257,9 @@ const Careers = () => {
                                 : ''
                         }`}
                     >
+                        <div>
+                
+                </div>
                         {domain}
                     </button>
                 ))}
@@ -302,7 +317,7 @@ const Careers = () => {
                         <div className='bg-bgtop pb-10 md:pt-20 sm:pt-10 pt-5 w-full'>
                             {(selectedDomains.length === 0 
                                 ? translatedJobs 
-                                : translatedJobs.filter(job => selectedDomains.includes(job.jobDomain)))
+                                : translatedJobs.filter(job => selectedDomains.includes(job.jobDomain.jobDomainName)))
                                 .map(job => renderSection(job))}
                         </div>
                     </div>

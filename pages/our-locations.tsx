@@ -8,7 +8,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Link from 'next/link';
 import useTranslation from '../hooks/useTranslation';
 import Head from 'next/head';
-
+import { blurHashToDataURL } from '@/utils/blurhash';
 
 interface Location {
     locationName: string;
@@ -17,19 +17,21 @@ interface Location {
         latitude: number;
         longitude: number;
     };
-    distance?: number; // Optional field to store calculated distance
+    distance?: number;
+    locationImage: {
+        url: string
+    }
+    blurHash: string;
+    googleProfileLink: string
 }
 
 interface LocationResponse {
     locationDetails: Location[];
 }
 
-
-
-// Utility function to calculate the distance between two points
 const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const toRadians = (deg: number) => deg * (Math.PI / 180);
-    const R = 3958.8; // Radius of Earth in miles
+    const R = 3958.8;
     const dLat = toRadians(lat2 - lat1);
     const dLon = toRadians(lon2 - lon1);
     const a =
@@ -64,8 +66,7 @@ const OurLocations: React.FC = () => {
         };
     
         translateText();
-      }, [translate, language]);
-
+    }, [translate, language]);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -80,6 +81,11 @@ const OurLocations: React.FC = () => {
                                     latitude
                                     longitude
                                 }
+                                locationImage {
+                                    url
+                                }
+                                blurHash
+                                googleProfileLink
                             }
                         }
                     `
@@ -87,8 +93,7 @@ const OurLocations: React.FC = () => {
 
                 if (response && response.locationDetails) {
                     setLocations(response.locationDetails);
-                    setFilteredLocations(response.locationDetails); // Initialize filtered locations
-                    console.log(response.locationDetails);
+                    setFilteredLocations(response.locationDetails);
                 }
             } catch (error) {
                 console.error("GraphQL Error:", error);
@@ -138,11 +143,7 @@ const OurLocations: React.FC = () => {
                     distance
                 };
             });
-
-            // Sort locations by distance (ascending)
             const sortedLocations = updatedLocations.sort((a, b) => (a.distance! - b.distance!));
-
-            // Only update the state if the sorted locations are different
             setFilteredLocations(sortedLocations);
         }
     }, [location, locations]);
@@ -173,12 +174,15 @@ const OurLocations: React.FC = () => {
  
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError("");
-        setZipCode(event.target.value);
+        const searchTerm = event.target.value.toLowerCase();
+        setZipCode(searchTerm);
 
-        // Filter locations based on the entered zip code
+        // Filter locations based on locationName, address, or the entered search term
         const filtered = locations.filter(location =>
-            location.address.includes(event.target.value)
+            location.locationName.toLowerCase().includes(searchTerm) ||
+            location.address.toLowerCase().includes(searchTerm)
         );
+
         if (location) {
             const updatedLocations = filtered.map((loc) => {
                 const distance = getDistance(location.lat, location.lng, loc.location.latitude, loc.location.longitude);
@@ -187,16 +191,11 @@ const OurLocations: React.FC = () => {
                     distance
                 };
             });
-
-            // Sort locations by distance (ascending)
             const sortedLocations = updatedLocations.sort((a, b) => (a.distance! - b.distance!));
-
-            // Only update the state if the sorted locations are different
             setFilteredLocations(sortedLocations);
-            return;
+        } else {
+            setFilteredLocations(filtered);
         }
-        console.log(filtered);
-        setFilteredLocations(filtered);
     };
 
     const handleSearch = () => {
@@ -209,17 +208,16 @@ const OurLocations: React.FC = () => {
 
     const baseUrl = 'https://smileloftdental.com';
     const pageUrl = `${baseUrl}/our-locations`;
+
     return (
         <>
-          <Head>
+            <Head>
                 <title>Our Locations | Smile Loft Dental</title>
                 <meta
                     name="description"
                     content="Find a Smile Loft Dental location near you. Our state-of-the-art dental clinics are conveniently located to serve your oral health needs."
                 />
                 <link rel="canonical" href={pageUrl} />
-                
-                {/* OG Tags */}
                 <meta property="og:title" content="Our Locations | Smile Loft Dental" />
                 <meta 
                     property="og:description" 
@@ -228,8 +226,6 @@ const OurLocations: React.FC = () => {
                 <meta property="og:image" content="/assets/slider2.png" />
                 <meta property="og:url" content={pageUrl} />
                 <meta property="og:type" content="website" />
-                
-                {/* Twitter Tags */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Our Locations | Smile Loft Dental" />
                 <meta 
@@ -238,61 +234,61 @@ const OurLocations: React.FC = () => {
                 />
                 <meta name="twitter:image" content="/assets/slider2.png" />
             </Head>
-        <div className='lg:py-20 lg:px-24 pb-10 bg-bgtop !pt-40 flex flex-col w-full !overflow-hidden'>
-            <div className="relative w-full px-3 font-nunito mb-10">
-                <input
-                    type="text"
-                    placeholder="City Zip Code"
-                    value={zipCode}
-                    onChange={handleInputChange}
-                    className="w-full rounded-lg py-3 px-4 pl-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                />
-                <SearchIcon 
-                    className="absolute top-3 right-6 text-gray-500 cursor-pointer"
-                    style={{ fontSize: 24 }} 
-                    onClick={handleSearch}
-                />
-            </div>
-            {/* {error && <p className="text-red-500 mb-4">{error}</p>} */}
-            {filteredLocations.length === 0 && !loading && !error && (
-            <p className="text-gray-500 mb-4">No matches found.</p>
-            )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-3">
-            {filteredLocations.map((location, index) => (
-                   <Link
-                   key={index}
-                   href={`https://www.google.com/maps?q=${location.location.latitude},${location.location.longitude}`}
-                   passHref
-                   target='_blank'
-               >
-    <div className="p-4 rounded-lg">
-        <div className="overflow-hidden">
-            <Image 
-                src="https://res.cloudinary.com/dnl96eqgs/image/upload/v1723444340/ojamuogm4vd8vuuaixmm.jpg" 
-                alt={location.locationName} 
-                width={460} 
-                height={460} 
-                className=" h-[420px] w-[460px] object-cover" 
-            />
-        </div>
-        <h2 className='text-3xl font-playfair text-primary my-4'>{location.locationName}</h2>
-        <p className='max-w-[400px] font-nunito text-xl text-toptext font-semibold'>{location.address}</p>
-        <div className="flex justify-between items-center mt-2">
-            {location.distance !== undefined && (
-                <div className='font-nunito text-lg text-[#000] mt-2 flex items-center gap-x-1 justify-center'>
-                    <span className='' >
-                       <LocationOnIcon/> {location.distance.toFixed(2)}
-                    </span> 
-                     {translatedText}
+            <div className='lg:py-20 lg:px-24 pb-10 bg-bgtop !pt-40 flex flex-col w-full !overflow-hidden'>
+                <div className="relative w-full px-3 font-nunito mb-10">
+                    <input
+                        type="text"
+                        placeholder="Search by location name, address, or zipcode"
+                        value={zipCode}
+                        onChange={handleInputChange}
+                        className="w-full rounded-lg py-3 px-4 pl-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    />
+                    <SearchIcon 
+                        className="absolute top-3 right-6 text-gray-500 cursor-pointer"
+                        style={{ fontSize: 24 }} 
+                        onClick={handleSearch}
+                    />
                 </div>
-            )}
-        </div>
-    </div>
-    </Link>
-))}
-
+                {filteredLocations.length === 0 && !loading && !error && (
+                    <p className="text-gray-500 mb-4">No matches found.</p>
+                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-3">
+                    {filteredLocations.map((location, index) => (
+                        <Link
+                            key={index}
+                            href={location.googleProfileLink}
+                            passHref
+                            target='_blank'
+                        >
+                            <div className="p-4 rounded-lg">
+                                <div className="overflow-hidden">
+                                    <Image 
+                                        src={location.locationImage.url}
+                                        placeholder='blur'
+                                        blurDataURL={blurHashToDataURL(location.blurHash)} 
+                                        alt={location.locationName} 
+                                        width={460} 
+                                        height={460} 
+                                        className="h-[420px] w-[460px] object-cover rounded-lg" 
+                                    />
+                                </div>
+                                <h2 className='text-3xl font-playfair text-primary my-4'>{location.locationName}</h2>
+                                <p className='max-w-[400px] font-nunito text-xl text-toptext font-semibold'>{location.address}</p>
+                                <div className="flex justify-between items-center mt-2">
+                                    {location.distance !== undefined && (
+                                        <div className='font-nunito text-lg text-[#000] mt-2 flex items-center gap-x-1 justify-center'>
+                                            <span className=''>
+                                                <LocationOnIcon/> {location.distance.toFixed(2)}
+                                            </span> 
+                                            {translatedText}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
-        </div>
         </>
     );
 };

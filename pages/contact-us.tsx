@@ -56,7 +56,7 @@ const Ourservices: React.FC = () => {
         );
 
         if (response && response.locationDetails) {
-            console.log(response);
+        
           setServices(response.locationDetails);
         }
       } catch (error) {
@@ -146,7 +146,13 @@ const Ourservices: React.FC = () => {
                   <div
                     className="absolute inset-0 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 rounded-lg bg-cover bg-center hidden sm:block"
                     style={{ backgroundImage: `url(${service.locationImage.url})` }}
-                  ></div>
+                  >
+                     <div className="absolute inset-x-0 bottom-0 bg-black bg-opacity-80 p-4  rounded-t-lg">
+                      <h2 className='text-3xl sm:text-3xl font-playfair text-white'>
+                        {service.locationName}
+                      </h2>
+                    </div>
+                  </div>
                   
                   {/* Mobile layout */}
                   <div className="sm:hidden w-full h-full absolute inset-0 rounded-lg bg-cover bg-center"

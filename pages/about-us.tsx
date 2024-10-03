@@ -4,11 +4,14 @@ import image from "../assets/dentist.png";
 import { Timeline } from '@/components/ui/timeline';
 import useTranslation from '@/hooks/useTranslation';
 import Head from 'next/head';
+import { graphQLClient } from "@/lib/graphqlClient";
+import { gql } from 'graphql-request';
 
 interface TimelineEntry {
   title: string;
   content: React.ReactNode;
 }
+
 
 const AboutUs = () => {
   const { translate, language } = useTranslation();
@@ -18,6 +21,9 @@ const AboutUs = () => {
   const [translatedWhyChooseParagraph1, setTranslatedWhyChooseParagraph1] = useState<string>("Smile Loft Dental isn't just a dental office; it's a community dedicated to your overall well-being. Our highly skilled team prioritizes patient education and personalized care, ensuring that every visit is tailored to your unique needs. With state-of-the-art technology, gentle techniques, and a focus on preventive care, we work diligently to keep your smile healthy and beautiful.");
   const [translatedWhyChooseParagraph2, setTranslatedWhyChooseParagraph2] = useState<string>("At Smile Loft, you're more than just a patient—you're family. We are committed to transparency and integrity in every interaction, fostering trust and long-term relationships. Our emphasis on leadership, compassion, and humility means we are always learning and improving to serve you better. Choose Smile Loft Dental as your dental home and experience the perfect blend of clinical excellence and compassionate care.");
 
+  
+
+  
   const timelineData: TimelineEntry[] = [
     { title: '2013', content: <p>Laurel</p> },
     { title: '2017', content: <p>Glen Burnie</p> },
